@@ -2,8 +2,8 @@
 const CONTRACT_ADDRESSES = {
   // Etherlink Testnet
   128123: {
-    token1ContractAddress: "0x0000000000000000000000000000000000000000", // To be deployed
-    quizGameContractAddress: "0x0000000000000000000000000000000000000000"  // To be deployed
+    token1ContractAddress: "0x7e9532d025b0d0c06e5913170d5271851b37cf39", // To be deployed
+    quizGameContractAddress: "0xc0ee7f9763f414d82c1b59441a6338999eafa80e"  // To be deployed
   }
 } as const;
 
