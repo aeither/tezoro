@@ -27,6 +27,9 @@ function GlobalHeader({
     chainId: chain?.id,
   });
 
+  // TODO: Fix token balance display
+  console.log("tokenBalance", tokenBalance);
+  
   return (
     <header style={{
       position: "fixed",
@@ -162,7 +165,7 @@ function GlobalHeader({
               gap: "0.5rem"
             }}>
               <span>🪙</span>
-              <span>{parseFloat(tokenBalance.formatted).toFixed(2)} {tokenBalance.symbol}</span>
+              <span>{parseFloat(tokenBalance.value.toString()).toFixed(2)} {tokenBalance.symbol}</span>
             </div>
           </div>
         )}
