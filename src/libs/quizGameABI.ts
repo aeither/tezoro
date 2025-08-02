@@ -19,11 +19,6 @@ const quizGameABI = [
         "name": "completeQuiz",
         "inputs": [
             {
-                "name": "quizId",
-                "type": "string",
-                "internalType": "string"
-            },
-            {
                 "name": "submittedAnswer",
                 "type": "uint256",
                 "internalType": "uint256"
@@ -40,11 +35,6 @@ const quizGameABI = [
                 "name": "user",
                 "type": "address",
                 "internalType": "address"
-            },
-            {
-                "name": "quizId",
-                "type": "string",
-                "internalType": "string"
             }
         ],
         "outputs": [
@@ -79,25 +69,6 @@ const quizGameABI = [
                         "internalType": "string"
                     }
                 ]
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "getActiveQuizId",
-        "inputs": [
-            {
-                "name": "user",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "string",
-                "internalType": "string"
             }
         ],
         "stateMutability": "view"

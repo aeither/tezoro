@@ -59,10 +59,10 @@ function QuizGameContract() {
   const [quizCompleted, setQuizCompleted] = useState(false);
 
   // Contract reads
-  const { data: activeQuizId } = useReadContract({
+  const { data: userSession } = useReadContract({
     address: contractAddresses.quizGameContractAddress as `0x${string}`,
     abi: quizGameABI,
-    functionName: 'getActiveQuizId',
+    functionName: 'getQuizSession',
     args: [address as `0x${string}`],
     query: {
       enabled: !!address,
@@ -78,6 +78,9 @@ function QuizGameContract() {
       enabled: !!address,
     },
   });
+
+  // Extract quiz ID from user session
+  const activeQuizId = userSession?.quizId || '';
 
   // Contract writes
   const { writeContract: startQuiz, isPending: isStartPending, data: startHash } = useWriteContract();
@@ -209,14 +212,12 @@ function QuizGameContract() {
             </Link>
             <button
               onClick={() => {
-                if (activeQuizId) {
-                  completeQuiz({
-                    address: contractAddresses.quizGameContractAddress as `0x${string}`,
-                    abi: quizGameABI,
-                    functionName: 'completeQuiz',
-                    args: [activeQuizId, BigInt(Math.floor(Math.random() * 100) + 1)],
-                  });
-                }
+                completeQuiz({
+                  address: contractAddresses.quizGameContractAddress as `0x${string}`,
+                  abi: quizGameABI,
+                  functionName: 'completeQuiz',
+                  args: [BigInt(Math.floor(Math.random() * 100) + 1)],
+                });
               }}
               disabled={isCompletePending}
               style={{
