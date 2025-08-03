@@ -4,7 +4,7 @@ import { useAccount, useReadContract, useWriteContract, useWaitForTransactionRec
 import { toast } from 'sonner'
 import { quizGameABI } from '../libs/quizGameABI'
 import { parseEther, formatEther } from 'viem'
-import { RedStoneOracle, GoldskyIndexer, FarcasterFrames, BlockchainUtils } from '../libs/blockchainServices'
+import { RedStoneOracle, GoldskyIndexer, BlockchainUtils } from '../libs/blockchainServices'
 import { getContractAddresses } from '../libs/constants'
 
 // Demo Flow Component - 2-minute MVP demonstration
@@ -106,7 +106,7 @@ export function DemoFlow() {
   )
 }
 
-// Step 1: Solo Quiz - "Learn & Earn" (0:00 – 0:20)
+// Step 1: Solo Quiz - "Learn & Earn"
 function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState(0)
@@ -115,7 +115,61 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
   const [earnedXTZ, setEarnedXTZ] = useState(0)
   const [streak, setStreak] = useState(3)
   const [isProcessingReward, setIsProcessingReward] = useState(false)
-  const { address } = useAccount()
+  const [quizStarted, setQuizStarted] = useState(false)
+  const [quizCompleted, setQuizCompleted] = useState(false)
+  const { address, chain } = useAccount()
+
+  // Smart contract integration
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(128123)
+  const { writeContract: startQuiz, isPending: isStartPending, data: startHash } = useWriteContract()
+  const { writeContract: completeQuiz, isPending: isCompletePending, data: completeHash } = useWriteContract()
+  
+  const { isSuccess: isStartSuccess } = useWaitForTransactionReceipt({ hash: startHash })
+  const { isSuccess: isCompleteSuccess } = useWaitForTransactionReceipt({ hash: completeHash })
+
+  // Handle transaction success
+  useEffect(() => {
+    if (isStartSuccess) {
+      setQuizStarted(true)
+      toast.success('🎮 Quiz started on-chain!')
+    }
+  }, [isStartSuccess])
+
+  useEffect(() => {
+    if (isCompleteSuccess) {
+      setQuizCompleted(true)
+      toast.success('🎁 Rewards claimed successfully!')
+    }
+  }, [isCompleteSuccess])
+
+  const handleStartQuiz = () => {
+    if (!address) {
+      toast.error('Please connect your wallet first')
+      return
+    }
+
+    startQuiz({
+      address: contractAddresses.quizGameContractAddress as `0x${string}`,
+      abi: quizGameABI,
+      functionName: 'startQuiz',
+      args: ['solo-quiz-demo', BigInt(42)], // quiz ID and initial answer
+      value: parseEther('0.01'), // Entry fee
+    })
+  }
+
+  const handleCompleteQuiz = () => {
+    if (!address) {
+      toast.error('Please connect your wallet first')
+      return
+    }
+
+    completeQuiz({
+      address: contractAddresses.quizGameContractAddress as `0x${string}`,
+      abi: quizGameABI,
+      functionName: 'completeQuiz',
+      args: [BigInt(score * 25)], // Submit score-based answer
+    })
+  }
 
   const questions = [
     {
@@ -141,36 +195,8 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
     if (answerIndex === questions[currentQuestion].correct) {
       setScore(score + 1)
       const reward = questions[currentQuestion].reward
-      setIsProcessingReward(true)
-      
-      // Trigger real blockchain transaction for reward
-      const processReward = async () => {
-        try {
-          const transaction = await BlockchainUtils.triggerMetaMaskTransaction({
-            to: "0xc0ee7f9763f414d82c1b59441a6338999eafa80e", // Quiz contract
-            value: "0x0",
-            description: `Quiz reward: +${reward} XTZ`
-          })
-          
-          if (transaction.success) {
-            setEarnedXTZ(earnedXTZ + reward)
-            setIsProcessingReward(false)
-            toast.success(`✅ Correct! +${reward} XTZ earned`, {
-              description: `Transaction: ${transaction.hash.substring(0, 10)}...`
-            })
-          }
-        } catch (error) {
-          // Fallback to simulation
-          setEarnedXTZ(earnedXTZ + reward)
-          setIsProcessingReward(false)
-          toast.success(`✅ Correct! +${reward} XTZ earned`, {
-            description: "Transaction confirmed in 0.4s"
-          })
-        }
-      }
-      
-      processReward()
-      
+      setEarnedXTZ(earnedXTZ + reward)
+      toast.success(`✅ Correct! +${reward} XTZ earned`)
     } else {
       toast.error("❌ Incorrect answer")
     }
@@ -181,11 +207,46 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
         setCurrentQuestion(currentQuestion + 1)
         setSelectedAnswer(null)
         setShowResult(false)
-      } else {
-        // Quiz completed - show completion message
-        toast.success("🎉 Solo quiz completed! Ready for next step?")
       }
     }, 2000)
+  }
+
+  // Show start quiz interface if quiz not started
+  if (!quizStarted) {
+    return (
+      <div className="max-w-4xl mx-auto p-8">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-white mb-4">
+            🎯 Step 1: Solo Quiz - Learn & Earn
+          </h1>
+          <p className="text-emerald-400 text-lg">
+            Start a quiz on Etherlink blockchain and earn XTZ rewards
+          </p>
+        </div>
+
+        <div className="bg-black/40 border border-emerald-500/30 rounded-2xl p-8 text-center">
+          <div className="text-6xl mb-4">🎮</div>
+          <h3 className="text-2xl font-bold text-white mb-4">Ready to Start Quiz?</h3>
+          <p className="text-gray-400 mb-6">
+            Entry fee: 0.01 XTZ • Potential rewards: Up to 0.1 XTZ
+          </p>
+          
+          <button
+            onClick={handleStartQuiz}
+            disabled={isStartPending || !address}
+            className="px-8 py-4 bg-emerald-600 text-white rounded-xl font-bold text-lg hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isStartPending ? '⏳ Starting Quiz...' : '🚀 Start Quiz On-Chain'}
+          </button>
+          
+          {!address && (
+            <p className="text-yellow-400 text-sm mt-4">
+              Please connect your wallet to start the quiz
+            </p>
+          )}
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -195,7 +256,7 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
           🎯 Step 1: Solo Quiz - Learn & Earn
         </h1>
         <p className="text-emerald-400 text-lg">
-          Complete questions and earn instant XTZ rewards on Etherlink
+          Quiz started on-chain! Answer questions to earn rewards
         </p>
       </div>
 
@@ -275,9 +336,27 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
         </div>
       )}
 
-      {/* Next Step Button - shown when quiz is completed */}
-      {currentQuestion >= questions.length - 1 && showResult && !isProcessingReward && (
+      {/* Complete Quiz Button - shown when all questions answered */}
+      {currentQuestion >= questions.length - 1 && showResult && !quizCompleted && (
         <div className="text-center mt-8">
+          <button
+            onClick={handleCompleteQuiz}
+            disabled={isCompletePending}
+            className="px-8 py-4 bg-blue-600 text-white rounded-xl font-bold text-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isCompletePending ? '⏳ Completing Quiz...' : '🎁 Complete Quiz & Claim Rewards'}
+          </button>
+        </div>
+      )}
+
+      {/* Next Step Button - shown when quiz is fully completed */}
+      {quizCompleted && (
+        <div className="text-center mt-8">
+          <div className="bg-green-900/30 border border-green-500/30 rounded-xl p-6 mb-6">
+            <div className="text-4xl mb-2">🎉</div>
+            <div className="text-white font-bold text-xl">Quiz Completed On-Chain!</div>
+            <div className="text-green-400">Rewards claimed successfully</div>
+          </div>
           <button
             onClick={onNext}
             className="px-8 py-3 bg-emerald-600 text-white rounded-xl font-bold text-lg hover:bg-emerald-700 transition-colors shadow-lg"
@@ -290,13 +369,67 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
   )
 }
 
-// Step 2: PvP Duel - "Battle in Real-Time" (0:21 – 0:50)
+// Step 2: PvP Duel - "Battle in Real-Time"
 function Step2PvPDuel({ onNext }: { onNext: () => void }) {
-  const [duelState, setDuelState] = useState<'matchmaking' | 'battle' | 'result'>('matchmaking')
+  const [duelState, setDuelState] = useState<'start' | 'matchmaking' | 'battle' | 'result'>('start')
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [userAnswer, setUserAnswer] = useState<number | null>(null)
   const [opponentAnswer, setOpponentAnswer] = useState<number | null>(null)
   const [winner, setWinner] = useState<'user' | 'opponent' | 'tie' | null>(null)
+  const [duelCompleted, setDuelCompleted] = useState(false)
+  const { address, chain } = useAccount()
+
+  // Smart contract integration
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(128123)
+  const { writeContract: startDuel, isPending: isStartPending, data: startHash } = useWriteContract()
+  const { writeContract: completeDuel, isPending: isCompletePending, data: completeHash } = useWriteContract()
+  
+  const { isSuccess: isStartSuccess } = useWaitForTransactionReceipt({ hash: startHash })
+  const { isSuccess: isCompleteSuccess } = useWaitForTransactionReceipt({ hash: completeHash })
+
+  // Handle transaction success
+  useEffect(() => {
+    if (isStartSuccess) {
+      setDuelState('matchmaking')
+      toast.success('🎮 Duel started on-chain! Finding opponent...')
+    }
+  }, [isStartSuccess])
+
+  useEffect(() => {
+    if (isCompleteSuccess) {
+      setDuelCompleted(true)
+      toast.success('🎁 Duel rewards claimed!')
+    }
+  }, [isCompleteSuccess])
+
+  const handleStartDuel = () => {
+    if (!address) {
+      toast.error('Please connect your wallet first')
+      return
+    }
+
+    startDuel({
+      address: contractAddresses.quizDuelContractAddress as `0x${string}`,
+      abi: quizGameABI, // Using same ABI for demo
+      functionName: 'startQuiz',
+      args: ['pvp-duel-demo', BigInt(123)],
+      value: parseEther('0.02'), // Entry fee for duel
+    })
+  }
+
+  const handleCompleteDuel = () => {
+    if (!address) {
+      toast.error('Please connect your wallet first')
+      return
+    }
+
+    completeDuel({
+      address: contractAddresses.quizDuelContractAddress as `0x${string}`,
+      abi: quizGameABI,
+      functionName: 'completeQuiz',
+      args: [BigInt(winner === 'user' ? 100 : 50)],
+    })
+  }
 
   const [oracleQuestion, setOracleQuestion] = useState<{
     question: string
@@ -398,6 +531,41 @@ function Step2PvPDuel({ onNext }: { onNext: () => void }) {
     }, 1500)
   }
 
+  if (duelState === 'start') {
+    return (
+      <div className="max-w-4xl mx-auto p-8 text-center">
+        <h1 className="text-4xl font-bold text-white mb-4">
+          ⚔️ Step 2: PvP Duel - Battle in Real-Time
+        </h1>
+        <p className="text-emerald-400 text-lg mb-8">
+          Challenge opponents with RedStone Oracle-powered questions
+        </p>
+        
+        <div className="bg-black/40 border border-emerald-500/30 rounded-2xl p-8 text-center">
+          <div className="text-6xl mb-4">⚔️</div>
+          <h3 className="text-2xl font-bold text-white mb-4">Ready for PvP Battle?</h3>
+          <p className="text-gray-400 mb-6">
+            Entry fee: 0.02 XTZ • Winner takes all + bonus rewards
+          </p>
+          
+          <button
+            onClick={handleStartDuel}
+            disabled={isStartPending || !address}
+            className="px-8 py-4 bg-red-600 text-white rounded-xl font-bold text-lg hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isStartPending ? '⏳ Starting Duel...' : '⚔️ Start PvP Duel'}
+          </button>
+          
+          {!address && (
+            <p className="text-yellow-400 text-sm mt-4">
+              Please connect your wallet to start the duel
+            </p>
+          )}
+        </div>
+      </div>
+    )
+  }
+
   if (duelState === 'matchmaking') {
     return (
       <div className="max-w-4xl mx-auto p-8 text-center">
@@ -405,54 +573,62 @@ function Step2PvPDuel({ onNext }: { onNext: () => void }) {
           ⚔️ Step 2: PvP Duel - Battle in Real-Time
         </h1>
         <p className="text-emerald-400 text-lg mb-8">
-          Challenging opponent with RedStone Oracle-powered questions
+          Duel started on-chain! Finding worthy opponent...
         </p>
         
         <div className="bg-black/40 border border-emerald-500/30 rounded-2xl p-12">
           <div className="animate-spin text-6xl mb-4">⚡</div>
           <div className="text-2xl font-bold text-white mb-2">Finding Opponent...</div>
           <div className="text-emerald-400 mb-4">Etherlink real-time matching</div>
+        </div>
+      </div>
+    )
+  }
+
+  if (duelState === 'result' && !duelCompleted) {
+    return (
+      <div className="max-w-4xl mx-auto p-8 text-center">
+        <div className="bg-black/40 border border-emerald-500/30 rounded-2xl p-12">
+          <div className="text-6xl mb-4">🎉</div>
+          <h2 className="text-3xl font-bold text-white mb-4">Duel Battle Finished!</h2>
+          <div className="text-emerald-400 text-lg mb-4">
+            {winner === 'user' ? '🏆 You Won!' : winner === 'opponent' ? '😔 Opponent Won' : '🤝 Tie Game'}
+          </div>
+          <div className="text-gray-400 mb-6">
+            RedStone Oracle integration ✅ • Commit-reveal scheme ✅
+          </div>
           
           <button
-            onClick={async () => {
-              try {
-                await BlockchainUtils.triggerMetaMaskTransaction({
-                  to: "0x0000000000000000000000000000000000000001", // Duel contract
-                  value: parseEther("0.02").toString(),
-                  description: "PvP Duel entry fee: 0.02 XTZ"
-                })
-                toast.success("💰 Entry fee paid! Searching for opponent...")
-              } catch (error) {
-                console.log("Demo transaction completed")
-              }
-            }}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            onClick={handleCompleteDuel}
+            disabled={isCompletePending}
+            className="px-8 py-4 bg-green-600 text-white rounded-xl font-bold text-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            💰 Pay Entry Fee (0.02 XTZ)
+            {isCompletePending ? '⏳ Claiming Rewards...' : '💰 Claim Duel Rewards'}
           </button>
         </div>
       </div>
     )
   }
 
-  if (duelState === 'result') {
+  if (duelCompleted) {
     return (
       <div className="max-w-4xl mx-auto p-8 text-center">
-        <div className="bg-black/40 border border-emerald-500/30 rounded-2xl p-12">
-          <div className="text-6xl mb-4">🎉</div>
-          <h2 className="text-3xl font-bold text-white mb-4">Duel Completed!</h2>
-          <div className="text-emerald-400 text-lg mb-4">
-            ⚡ All transactions settled in under 0.5s
-          </div>
-          <div className="text-white">
-            RedStone Oracle integration ✅<br/>
-            Commit-reveal scheme ✅<br/>
-            Instant settlement ✅
-          </div>
+        <div className="bg-green-900/30 border border-green-500/30 rounded-xl p-6 mb-6">
+          <div className="text-4xl mb-2">🏆</div>
+          <div className="text-white font-bold text-xl">Duel Completed On-Chain!</div>
+          <div className="text-green-400">Rewards claimed successfully</div>
         </div>
+        <button
+          onClick={onNext}
+          className="px-8 py-3 bg-emerald-600 text-white rounded-xl font-bold text-lg hover:bg-emerald-700 transition-colors shadow-lg"
+        >
+          Continue to Guild System 🛡️
+        </button>
       </div>
     )
   }
+
+
 
   return (
     <div className="max-w-6xl mx-auto p-8">
@@ -520,9 +696,10 @@ function Step2PvPDuel({ onNext }: { onNext: () => void }) {
   )
 }
 
-// Step 3: Guild System - "Study Together, Win Together" (0:51 – 1:20)
+// Step 3: Guild System - "Study Together, Win Together"
 function Step3GuildSystem({ onNext }: { onNext: () => void }) {
-  const [guildState, setGuildState] = useState<'create' | 'formed' | 'battle'>('create')
+  const [guildState, setGuildState] = useState<'create' | 'formed' | 'battle' | 'completed'>('create')
+  const [treasury, setTreasury] = useState(0.3)
   const [guildMembers] = useState([
     { name: "Alex", score: 850, avatar: "👤" },
     { name: "Sarah", score: 720, avatar: "👩" },
@@ -530,49 +707,157 @@ function Step3GuildSystem({ onNext }: { onNext: () => void }) {
     { name: "Emma", score: 590, avatar: "👱‍♀️" },
     { name: "You", score: 920, avatar: "🏆" }
   ])
+  const { address, chain } = useAccount()
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(128123)
 
-  useEffect(() => {
-    if (guildState === 'create') {
-      const timer = setTimeout(() => {
-        setGuildState('formed')
-        toast.success("🛡️ Guild formed on-chain!")
-      }, 3000)
-      return () => clearTimeout(timer)
-    } else if (guildState === 'formed') {
-      const timer = setTimeout(() => {
-        setGuildState('battle')
-        toast.success("⚔️ Guild vs Guild battle started!")
-      }, 4000)
-      return () => clearTimeout(timer)
-    } else if (guildState === 'battle') {
-      const timer = setTimeout(() => {
-        toast.success("🏆 Tezos Titans WIN! +0.5 XTZ to treasury")
-        setTimeout(() => onNext(), 2000)
-      }, 5000)
-      return () => clearTimeout(timer)
+  const handleCreateGuild = async () => {
+    try {
+      await BlockchainUtils.triggerMetaMaskTransaction({
+        to: contractAddresses.guildSystemContractAddress,
+        value: parseEther("0.05").toString(),
+        description: "Creating 'Tezos Titans' guild with 0.05 XTZ initial treasury"
+      })
+      setGuildState('formed')
+      setTreasury(0.05)
+      toast.success("🛡️ Guild created on-chain!")
+    } catch (error) {
+      // Fallback for demo
+      setGuildState('formed')
+      toast.success("🛡️ Guild formed successfully!")
     }
-  }, [guildState, onNext])
+  }
+
+  const handleContributeToTreasury = async () => {
+    try {
+      await BlockchainUtils.triggerMetaMaskTransaction({
+        to: contractAddresses.guildSystemContractAddress,
+        value: parseEther("0.1").toString(),
+        description: "Contributing 0.1 XTZ to guild treasury"
+      })
+      setTreasury(treasury + 0.1)
+      toast.success("💰 Treasury contribution successful!")
+    } catch (error) {
+      toast.info("💰 Treasury contribution demo completed")
+    }
+  }
+
+  const handleStartBattle = async () => {
+    try {
+      await BlockchainUtils.triggerMetaMaskTransaction({
+        to: contractAddresses.guildSystemContractAddress,
+        value: parseEther("0.2").toString(),
+        description: "Starting Guild vs Guild battle with 0.2 XTZ prize pool"
+      })
+      setGuildState('battle')
+      toast.success("⚔️ Guild battle started!")
+    } catch (error) {
+      setGuildState('battle')
+      toast.success("⚔️ Guild battle initiated!")
+    }
+  }
+
+  // Remove automatic progressions - now manual
 
   if (guildState === 'create') {
     return (
       <div className="max-w-4xl mx-auto p-8 text-center">
         <h1 className="text-4xl font-bold text-white mb-4">
-          🛡️ Step 3: Form a Guild
+          🛡️ Step 3: Guild System
         </h1>
         <p className="text-emerald-400 text-lg mb-8">
-          Creating "Tezos Titans" study guild with Farcaster friends
+          Create "Tezos Titans" study guild on-chain
         </p>
         
-        <div className="bg-black/40 border border-emerald-500/30 rounded-2xl p-12">
-          <div className="animate-pulse text-6xl mb-4">🛡️</div>
-          <div className="text-2xl font-bold text-white mb-2">Creating Guild...</div>
-          <div className="text-emerald-400 mb-4">Deploying guild treasury contract</div>
-          <div className="text-sm text-gray-400">
-            📱 Farcaster Frame sent to friends<br/>
-            ⛓️ On-chain guild formation<br/>
-            💰 Treasury initialization
+        <div className="bg-black/40 border border-emerald-500/30 rounded-2xl p-8">
+          <div className="text-6xl mb-4">🛡️</div>
+          <h3 className="text-2xl font-bold text-white mb-4">Ready to Form Your Guild?</h3>
+          <p className="text-gray-400 mb-6">
+            Initial treasury: 0.05 XTZ • Invite friends via Farcaster
+          </p>
+          
+          <button
+            onClick={handleCreateGuild}
+            disabled={!address}
+            className="px-8 py-4 bg-purple-600 text-white rounded-xl font-bold text-lg hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            🛡️ Create Guild On-Chain
+          </button>
+          
+          {!address && (
+            <p className="text-yellow-400 text-sm mt-4">
+              Please connect your wallet to create a guild
+            </p>
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  if (guildState === 'battle') {
+    return (
+      <div className="max-w-6xl mx-auto p-8">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-white mb-4">
+            ⚔️ Guild vs Guild Battle
+          </h1>
+          <p className="text-emerald-400 text-lg">
+            Tezos Titans vs Crypto Crusaders - Battle in progress!
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-8 mb-8">
+          <div className="bg-blue-900/30 border border-blue-500/30 rounded-xl p-6">
+            <div className="text-center mb-4">
+              <div className="text-3xl mb-2">🛡️</div>
+              <div className="text-white font-bold">Tezos Titans</div>
+              <div className="text-blue-400 text-2xl font-bold">2,860 pts</div>
+            </div>
+          </div>
+          
+          <div className="bg-red-900/30 border border-red-500/30 rounded-xl p-6">
+            <div className="text-center mb-4">
+              <div className="text-3xl mb-2">⚔️</div>
+              <div className="text-white font-bold">Crypto Crusaders</div>
+              <div className="text-red-400 text-2xl font-bold">2,340 pts</div>
+            </div>
           </div>
         </div>
+
+        <div className="text-center mt-8">
+          <div className="bg-green-900/30 border border-green-500/30 rounded-xl p-6">
+            <div className="text-4xl mb-2">🏆</div>
+            <div className="text-white font-bold text-2xl">Tezos Titans WIN!</div>
+            <div className="text-green-400">+0.5 XTZ added to guild treasury</div>
+            <div className="text-sm text-gray-400 mt-2">
+              Goldsky leaderboard updated in real-time
+            </div>
+            
+            <button
+              onClick={() => setGuildState('completed')}
+              className="mt-4 px-8 py-3 bg-emerald-600 text-white rounded-xl font-bold text-lg hover:bg-emerald-700 transition-colors"
+            >
+              Continue to NFT Quizzes 🖼️
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (guildState === 'completed') {
+    return (
+      <div className="max-w-4xl mx-auto p-8 text-center">
+        <div className="bg-green-900/30 border border-green-500/30 rounded-xl p-6 mb-6">
+          <div className="text-4xl mb-2">🏆</div>
+          <div className="text-white font-bold text-xl">Guild System Complete!</div>
+          <div className="text-green-400">All guild features demonstrated</div>
+        </div>
+        <button
+          onClick={onNext}
+          className="px-8 py-3 bg-emerald-600 text-white rounded-xl font-bold text-lg hover:bg-emerald-700 transition-colors shadow-lg"
+        >
+          Continue to NFT Quizzes 🖼️
+        </button>
       </div>
     )
   }
@@ -600,7 +885,7 @@ function Step3GuildSystem({ onNext }: { onNext: () => void }) {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Treasury:</span>
-                <span className="text-emerald-400">0.3 XTZ</span>
+                <span className="text-emerald-400">{treasury.toFixed(2)} XTZ</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Ranking:</span>
@@ -626,28 +911,27 @@ function Step3GuildSystem({ onNext }: { onNext: () => void }) {
           </div>
         </div>
 
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 space-y-4">
           <div className="bg-yellow-900/30 border border-yellow-500/30 rounded-xl p-6">
             <div className="text-2xl mb-2">⚔️</div>
-            <div className="text-white font-bold">Upcoming: Guild vs Guild Battle</div>
-            <div className="text-yellow-400 text-sm">Preparing for 5v5 match...</div>
+            <div className="text-white font-bold">Guild vs Guild Battle</div>
+            <div className="text-yellow-400 text-sm">Ready to start battle with prize pool?</div>
             
-            <button
-              onClick={async () => {
-                try {
-                  await BlockchainUtils.triggerMetaMaskTransaction({
-                    to: "0x0000000000000000000000000000000000000002", // Guild contract
-                    value: parseEther("0.1").toString(),
-                    description: "Contributing 0.1 XTZ to guild treasury"
-                  })
-                } catch (error) {
-                  console.log("Transaction demo completed")
-                }
-              }}
-              className="mt-4 px-6 py-2 bg-yellow-600 text-white rounded-lg font-medium hover:bg-yellow-700 transition-colors"
-            >
-              💰 Contribute to Treasury
-            </button>
+            <div className="mt-4 space-x-4">
+              <button
+                onClick={handleContributeToTreasury}
+                className="px-6 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
+              >
+                💰 Contribute to Treasury
+              </button>
+              
+              <button
+                onClick={handleStartBattle}
+                className="px-6 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors"
+              >
+                ⚔️ Start Guild Battle
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -695,55 +979,43 @@ function Step3GuildSystem({ onNext }: { onNext: () => void }) {
   )
 }
 
-// Step 4: NFT Quizzes - "Own Your Knowledge" (1:21 – 1:55)
+// Step 4: NFT Quizzes - "Own Your Knowledge"
 function Step4NFTQuizzes({ onNext }: { onNext: () => void }) {
-  const [nftState, setNftState] = useState<'create' | 'mint' | 'earning'>('create')
+  const [nftState, setNftState] = useState<'create' | 'mint' | 'earning' | 'completed'>('create')
   const [royaltyEarned] = useState(0.002)
+  const { address, chain } = useAccount()
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(128123)
 
-  useEffect(() => {
-    if (nftState === 'create') {
-      const timer = setTimeout(() => {
-        setNftState('mint')
-        toast.success("📝 Quiz created successfully!")
-      }, 4000)
-      return () => clearTimeout(timer)
-    } else if (nftState === 'mint') {
-      const timer = setTimeout(async () => {
-        try {
-          // Trigger real NFT minting with MetaMask
-          await ThirdwebNFT.mintQuizNFT({
-            title: "Advanced Solidity Patterns",
-            description: "Expert-level quiz on advanced Solidity development patterns",
-            difficulty: 5,
-            royaltyPercent: 10
-          })
-          
-          setNftState('earning')
-          toast.success("🎉 Quiz NFT minted! Now earning royalties")
-        } catch (error) {
-          // Fallback to simulation
-          setNftState('earning')
-          toast.success("🎉 Quiz NFT minted! Now earning royalties")
-        }
-      }, 3000)
-      return () => clearTimeout(timer)
-    } else if (nftState === 'earning') {
-      const timer = setTimeout(() => {
-        setTimeout(() => onNext(), 2000)
-      }, 4000)
-      return () => clearTimeout(timer)
+  const handleCreateQuiz = () => {
+    setNftState('mint')
+    toast.success("📝 Quiz created successfully!")
+  }
+
+  const handleMintNFT = async () => {
+    try {
+      await BlockchainUtils.triggerMetaMaskTransaction({
+        to: contractAddresses.quizNFTContractAddress,
+        value: parseEther("0.01").toString(),
+        description: "Minting 'Advanced Solidity Patterns' quiz as NFT"
+      })
+      setNftState('earning')
+      toast.success("🎉 Quiz NFT minted! Now earning royalties")
+    } catch (error) {
+      // Fallback for demo
+      setNftState('earning')
+      toast.success("🎉 Quiz NFT minted! Now earning royalties")
     }
-  }, [nftState, onNext])
+  }
 
   if (nftState === 'create') {
     return (
       <div className="max-w-4xl mx-auto p-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-white mb-4">
-            🖼️ Step 4: Mint Quiz as NFT
+            🖼️ Step 4: NFT Quiz Creator
           </h1>
           <p className="text-emerald-400 text-lg">
-            Creating "Advanced Solidity Patterns" quiz
+            Create and mint "Advanced Solidity Patterns" quiz as NFT
           </p>
         </div>
         
@@ -779,7 +1051,7 @@ function Step4NFTQuizzes({ onNext }: { onNext: () => void }) {
             </div>
           </div>
 
-          <div className="bg-gray-800/50 rounded-lg p-4 mb-4">
+          <div className="bg-gray-800/50 rounded-lg p-4 mb-6">
             <div className="text-white font-bold mb-2">Sample Questions:</div>
             <div className="text-sm text-gray-400 space-y-1">
               <div>1. What is the diamond pattern in Solidity?</div>
@@ -790,9 +1062,12 @@ function Step4NFTQuizzes({ onNext }: { onNext: () => void }) {
           </div>
           
           <div className="text-center">
-            <div className="animate-pulse text-emerald-400">
-              Creating quiz content... ✨
-            </div>
+            <button
+              onClick={handleCreateQuiz}
+              className="px-8 py-4 bg-purple-600 text-white rounded-xl font-bold text-lg hover:bg-purple-700 transition-colors"
+            >
+              📝 Create Quiz Content
+            </button>
           </div>
         </div>
       </div>
@@ -803,23 +1078,37 @@ function Step4NFTQuizzes({ onNext }: { onNext: () => void }) {
     return (
       <div className="max-w-4xl mx-auto p-8 text-center">
         <h1 className="text-4xl font-bold text-white mb-8">
-          🎉 Minting Quiz NFT
+          🎉 Ready to Mint Quiz NFT
         </h1>
         
         <div className="bg-black/40 border border-emerald-500/30 rounded-2xl p-12">
-          <div className="animate-bounce text-6xl mb-4">🖼️</div>
+          <div className="text-6xl mb-4">🖼️</div>
           <div className="text-2xl font-bold text-white mb-4">
-            Quiz NFT: "Advanced Solidity" #123
+            Quiz NFT: "Advanced Solidity Patterns"
           </div>
           <div className="text-emerald-400 mb-4">
-            Powered by thirdweb ERC-721 + EIP-2981
+            ERC-721 with EIP-2981 royalty standard
           </div>
-          <div className="text-sm text-gray-400 space-y-2">
+          <div className="text-sm text-gray-400 space-y-2 mb-6">
             <div>✅ Quiz logic tied to NFT ownership</div>
             <div>✅ 10% royalty on every play</div>
-            <div>✅ Stored on IPFS</div>
-            <div>✅ Sequence Wallet integration</div>
+            <div>✅ IPFS metadata storage</div>
+            <div>✅ On-chain creator economy</div>
           </div>
+          
+          <button
+            onClick={handleMintNFT}
+            disabled={!address}
+            className="px-8 py-4 bg-blue-600 text-white rounded-xl font-bold text-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            🖼️ Mint Quiz NFT (0.01 XTZ)
+          </button>
+          
+          {!address && (
+            <p className="text-yellow-400 text-sm mt-4">
+              Please connect your wallet to mint NFT
+            </p>
+          )}
         </div>
       </div>
     )
@@ -877,21 +1166,38 @@ function Step4NFTQuizzes({ onNext }: { onNext: () => void }) {
           <h2 className="text-3xl font-bold text-white mb-4">
             Tezoro: The On-Chain Knowledge Economy
           </h2>
-          <div className="text-emerald-400 text-lg mb-4">
+          <div className="text-emerald-400 text-lg mb-6">
             From solo quizzes to NFT-powered knowledge ownership
           </div>
-          <div className="flex justify-center gap-6 text-sm text-gray-400">
-            <span>🔗 Etherlink</span>
-            <span>🔮 RedStone</span>
-            <span>📊 Goldsky</span>
-            <span>🎨 thirdweb</span>
-            <span>💼 Sequence</span>
-            <span>📱 Farcaster</span>
-          </div>
+          
+          <button
+            onClick={() => setNftState('completed')}
+            className="px-8 py-3 bg-emerald-600 text-white rounded-xl font-bold text-lg hover:bg-emerald-700 transition-colors"
+          >
+            Complete Demo 🎉
+          </button>
         </div>
       </div>
     </div>
   )
+
+  if (nftState === 'completed') {
+    return (
+      <div className="max-w-4xl mx-auto p-8 text-center">
+        <div className="bg-green-900/30 border border-green-500/30 rounded-xl p-6 mb-6">
+          <div className="text-4xl mb-2">🎉</div>
+          <div className="text-white font-bold text-xl">Demo Complete!</div>
+          <div className="text-green-400">All Tezoro features demonstrated</div>
+        </div>
+        <button
+          onClick={onNext}
+          className="px-8 py-3 bg-emerald-600 text-white rounded-xl font-bold text-lg hover:bg-emerald-700 transition-colors shadow-lg"
+        >
+          Restart Demo 🔄
+        </button>
+      </div>
+    )
+  }
 }
 
 export const Route = createFileRoute('/demo')({

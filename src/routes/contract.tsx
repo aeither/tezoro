@@ -251,78 +251,78 @@ function ContractDebugPage() {
     );
   }
 
-  if (!isCorrectChain) {
-    return (
-      <div style={{
-        minHeight: "100vh",
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-        padding: "2rem",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center"
-      }}>
-        <Header 
-          title="🔧 Contract Debug"
-          subtitle="Debug and test smart contract functions"
-          showBackButton={true}
-          backTo="/"
-          backText="← Back to Home"
-        />
+  // if (!isCorrectChain) {
+  //   return (
+  //     <div style={{
+  //       minHeight: "100vh",
+  //       background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+  //       padding: "2rem",
+  //       display: "flex",
+  //       flexDirection: "column",
+  //       alignItems: "center",
+  //       justifyContent: "center"
+  //     }}>
+  //       <Header 
+  //         title="🔧 Contract Debug"
+  //         subtitle="Debug and test smart contract functions"
+  //         showBackButton={true}
+  //         backTo="/"
+  //         backText="← Back to Home"
+  //       />
         
-        <div style={{
-          background: "rgba(255, 255, 255, 0.95)",
-          borderRadius: "16px",
-          padding: "3rem",
-          textAlign: "center",
-          maxWidth: "600px",
-          width: "100%",
-          boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
-        }}>
-          <h2 style={{ fontSize: "2rem", marginBottom: "2rem", color: "#ef4444" }}>
-            ⚠️ Wrong Network
-          </h2>
-          <p style={{ fontSize: "1.2rem", marginBottom: "2rem", color: "#6b7280" }}>
-            Please switch to one of the supported networks to debug the contract.
-          </p>
-          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "2rem" }}>
-            <button
-                              onClick={() => switchChain({ chainId: etherlinkTestnet.id })}
-              style={{
-                backgroundColor: "#667eea",
-                color: "white",
-                border: "none",
-                borderRadius: "12px",
-                padding: "1rem 2rem",
-                fontSize: "1rem",
-                fontWeight: "600",
-                cursor: "pointer",
-                boxShadow: "0 4px 6px rgba(102, 126, 234, 0.3)"
-              }}
-            >
-                              Switch to Etherlink Testnet
-            </button>
-            <button
-                              // Only Etherlink Testnet is supported now
-              style={{
-                backgroundColor: "#22c55e",
-                color: "white",
-                border: "none",
-                borderRadius: "12px",
-                padding: "1rem 2rem",
-                fontSize: "1rem",
-                fontWeight: "600",
-                cursor: "pointer",
-                boxShadow: "0 4px 6px rgba(34, 197, 94, 0.3)"
-              }}
-            >
-                              // Only Etherlink Testnet is supported
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  //       <div style={{
+  //         background: "rgba(255, 255, 255, 0.95)",
+  //         borderRadius: "16px",
+  //         padding: "3rem",
+  //         textAlign: "center",
+  //         maxWidth: "600px",
+  //         width: "100%",
+  //         boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
+  //       }}>
+  //         <h2 style={{ fontSize: "2rem", marginBottom: "2rem", color: "#ef4444" }}>
+  //           ⚠️ Wrong Network
+  //         </h2>
+  //         <p style={{ fontSize: "1.2rem", marginBottom: "2rem", color: "#6b7280" }}>
+  //           Please switch to one of the supported networks to debug the contract.
+  //         </p>
+  //         <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "2rem" }}>
+  //           <button
+  //                             onClick={() => switchChain({ chainId: etherlinkTestnet.id })}
+  //             style={{
+  //               backgroundColor: "#667eea",
+  //               color: "white",
+  //               border: "none",
+  //               borderRadius: "12px",
+  //               padding: "1rem 2rem",
+  //               fontSize: "1rem",
+  //               fontWeight: "600",
+  //               cursor: "pointer",
+  //               boxShadow: "0 4px 6px rgba(102, 126, 234, 0.3)"
+  //             }}
+  //           >
+  //                             Switch to Etherlink Testnet
+  //           </button>
+  //           <button
+  //                             // Only Etherlink Testnet is supported now
+  //             style={{
+  //               backgroundColor: "#22c55e",
+  //               color: "white",
+  //               border: "none",
+  //               borderRadius: "12px",
+  //               padding: "1rem 2rem",
+  //               fontSize: "1rem",
+  //               fontWeight: "600",
+  //               cursor: "pointer",
+  //               boxShadow: "0 4px 6px rgba(34, 197, 94, 0.3)"
+  //             }}
+  //           >
+  //                             // Only Etherlink Testnet is supported
+  //           </button>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div style={{

@@ -123,7 +123,7 @@ export class RedStoneOracle {
   static formatPriceQuestion(symbol: string, price: number, options: string[]): {
     question: string
     options: string[]
-    correctIndex: number
+    correct: number
   } {
     const correctAnswer = `$${price.toFixed(2)}`
     const correctIndex = options.findIndex(opt => opt === correctAnswer)
@@ -131,7 +131,7 @@ export class RedStoneOracle {
     return {
       question: `What's the current price of ${symbol}? (RedStone Oracle)`,
       options,
-      correctIndex: correctIndex !== -1 ? correctIndex : 0
+      correct: correctIndex !== -1 ? correctIndex : 0
     }
   }
 }

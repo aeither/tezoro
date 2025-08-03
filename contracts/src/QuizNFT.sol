@@ -62,7 +62,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981, Ownable {
         uint256 playFee,
         uint256 royaltyPercent,
         string memory ipfsHash,
-        string memory tokenURI
+        string memory tokenURI_
     ) external returns (uint256) {
         require(bytes(title).length > 0, "Title required");
         require(difficulty >= 1 && difficulty <= 5, "Invalid difficulty");
@@ -88,7 +88,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981, Ownable {
         creatorQuizzes[msg.sender].push(tokenId);
         
         _mint(msg.sender, tokenId);
-        _setTokenURI(tokenId, tokenURI);
+        _setTokenURI(tokenId, tokenURI_);
         
         emit QuizMinted(tokenId, msg.sender, title, playFee);
         
@@ -97,58 +97,62 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981, Ownable {
     
     /// @notice Play a quiz and pay fees
     function playQuiz(uint256 tokenId, uint256 score, uint256 maxScore) external payable {
-        require(_exists(tokenId), "Quiz does not exist");
+        require(_ownerOf(tokenId) != address(0), "Quiz does not exist");
         Quiz storage quiz = quizzes[tokenId];
         require(quiz.active, "Quiz not active");
         require(msg.value >= quiz.playFee, "Insufficient payment");
         
+        bool passed = score >= (maxScore * 60) / 100; // 60% pass rate
+        
         // Record the play
-        QuizPlay memory play = QuizPlay({
+        quizPlays[tokenId].push(QuizPlay({
             quizId: tokenId,
             player: msg.sender,
             score: score,
             maxScore: maxScore,
             feePaid: msg.value,
             timestamp: block.timestamp,
-            passed: score >= (maxScore * 60) / 100 // 60% pass rate
-        });
+            passed: passed
+        }));
         
-        quizPlays[tokenId].push(play);
         playerHistory[msg.sender].push(tokenId);
-        
         quiz.playCount++;
         quiz.totalEarnings += msg.value;
         
-        // Calculate and distribute fees
-        uint256 royaltyAmount = (msg.value * quiz.royaltyPercent) / 10000;
-        uint256 platformFee = (msg.value * PLATFORM_FEE_PERCENT) / 10000;
-        uint256 remainingAmount = msg.value - royaltyAmount - platformFee;
-        
-        // Pay royalty to creator
-        if (royaltyAmount > 0) {
-            (bool royaltySent, ) = quiz.creator.call{value: royaltyAmount}("");
-            require(royaltySent, "Royalty payment failed");
-            emit RoyaltyPaid(tokenId, quiz.creator, royaltyAmount);
-        }
-        
-        // Pay platform fee to owner
-        if (platformFee > 0) {
-            (bool platformSent, ) = owner().call{value: platformFee}("");
-            require(platformSent, "Platform fee payment failed");
-        }
+        // Distribute fees
+        _distributeFees(tokenId, msg.value);
         
         // Mint bonus tokens for player if they passed
-        if (play.passed) {
-            uint256 bonusTokens = quiz.playFee * 20; // 20x multiplier for passing
-            try token.mint(msg.sender, bonusTokens) {} catch {}
+        if (passed) {
+            try token.mint(msg.sender, quiz.playFee * 20) {} catch {}
         }
         
         emit QuizPlayed(tokenId, msg.sender, score, msg.value);
     }
     
+    /// @notice Internal function to distribute fees and royalties
+    function _distributeFees(uint256 tokenId, uint256 payment) internal {
+        Quiz storage quiz = quizzes[tokenId];
+        uint256 royaltyAmount = (payment * quiz.royaltyPercent) / 10000;
+        uint256 platformFee = (payment * PLATFORM_FEE_PERCENT) / 10000;
+        
+        // Pay royalty to creator
+        if (royaltyAmount > 0) {
+            (bool success, ) = quiz.creator.call{value: royaltyAmount}("");
+            require(success, "Royalty payment failed");
+            emit RoyaltyPaid(tokenId, quiz.creator, royaltyAmount);
+        }
+        
+        // Pay platform fee to owner
+        if (platformFee > 0) {
+            (bool success, ) = owner().call{value: platformFee}("");
+            require(success, "Platform fee payment failed");
+        }
+    }
+    
     /// @notice Update quiz metadata (creator only)
     function updateQuizMetadata(uint256 tokenId, string memory newIpfsHash, string memory newTokenURI) external {
-        require(_exists(tokenId), "Quiz does not exist");
+        require(_ownerOf(tokenId) != address(0), "Quiz does not exist");
         require(ownerOf(tokenId) == msg.sender, "Not quiz owner");
         
         quizzes[tokenId].ipfsHash = newIpfsHash;
@@ -159,7 +163,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981, Ownable {
     
     /// @notice Toggle quiz active status
     function toggleQuizActive(uint256 tokenId) external {
-        require(_exists(tokenId), "Quiz does not exist");
+        require(_ownerOf(tokenId) != address(0), "Quiz does not exist");
         require(ownerOf(tokenId) == msg.sender, "Not quiz owner");
         
         quizzes[tokenId].active = !quizzes[tokenId].active;
@@ -167,7 +171,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981, Ownable {
     
     /// @notice Update quiz play fee
     function updatePlayFee(uint256 tokenId, uint256 newPlayFee) external {
-        require(_exists(tokenId), "Quiz does not exist");
+        require(_ownerOf(tokenId) != address(0), "Quiz does not exist");
         require(ownerOf(tokenId) == msg.sender, "Not quiz owner");
         
         quizzes[tokenId].playFee = newPlayFee;
@@ -186,7 +190,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981, Ownable {
         bool active,
         string memory ipfsHash
     ) {
-        require(_exists(tokenId), "Quiz does not exist");
+        require(_ownerOf(tokenId) != address(0), "Quiz does not exist");
         Quiz memory quiz = quizzes[tokenId];
         
         return (
@@ -205,7 +209,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981, Ownable {
     
     /// @notice Get quiz play history
     function getQuizPlays(uint256 tokenId) external view returns (QuizPlay[] memory) {
-        require(_exists(tokenId), "Quiz does not exist");
+        require(_ownerOf(tokenId) != address(0), "Quiz does not exist");
         return quizPlays[tokenId];
     }
     
@@ -226,23 +230,24 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981, Ownable {
         uint256 averageScore,
         uint256 totalRevenue
     ) {
-        require(_exists(tokenId), "Quiz does not exist");
+        require(_ownerOf(tokenId) != address(0), "Quiz does not exist");
         
         QuizPlay[] memory plays = quizPlays[tokenId];
         uint256 passCount_ = 0;
         uint256 totalScore = 0;
+        uint256 playsLength = plays.length;
         
-        for (uint256 i = 0; i < plays.length; i++) {
+        for (uint256 i = 0; i < playsLength; i++) {
             if (plays[i].passed) {
                 passCount_++;
             }
-            totalScore += (plays[i].score * 100) / plays[i].maxScore; // Normalize to percentage
+            totalScore += (plays[i].score * 100) / plays[i].maxScore;
         }
         
-        uint256 averageScore_ = plays.length > 0 ? totalScore / plays.length : 0;
+        uint256 averageScore_ = playsLength > 0 ? totalScore / playsLength : 0;
         
         return (
-            plays.length,
+            playsLength,
             passCount_,
             averageScore_,
             quizzes[tokenId].totalEarnings
@@ -251,7 +256,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981, Ownable {
     
     /// @notice EIP-2981 royalty info
     function royaltyInfo(uint256 tokenId, uint256 salePrice) external view override returns (address, uint256) {
-        require(_exists(tokenId), "Quiz does not exist");
+        require(_ownerOf(tokenId) != address(0), "Quiz does not exist");
         
         address creator = quizzes[tokenId].creator;
         uint256 royaltyAmount = (salePrice * quizzes[tokenId].royaltyPercent) / 10000;
@@ -267,11 +272,6 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981, Ownable {
     /// @notice Override tokenURI to use URIStorage
     function tokenURI(uint256 tokenId) public view override(ERC721, ERC721URIStorage) returns (string memory) {
         return super.tokenURI(tokenId);
-    }
-    
-    /// @notice Override _burn to handle URIStorage
-    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
-        super._burn(tokenId);
     }
     
     /// @notice Withdraw platform fees

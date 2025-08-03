@@ -2,8 +2,8 @@
 const CONTRACT_ADDRESSES = {
   // Etherlink Testnet
   128123: {
-    token1ContractAddress: "0x7e9532d025b0d0c06e5913170d5271851b37cf39",
-    quizGameContractAddress: "0xc0ee7f9763f414d82c1b59441a6338999eafa80e",
+    token1ContractAddress: "0xdbea77ee1b18454d31a83cc2eef8e8670cc659fc",
+    quizGameContractAddress: "0x79d2077580679166485d9fcfc46b3be3b6c15d74",
     // New demo contracts (placeholder addresses - update after deployment)
     quizDuelContractAddress: "0x0000000000000000000000000000000000000001",
     guildSystemContractAddress: "0x0000000000000000000000000000000000000002",
