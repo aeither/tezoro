@@ -1,3 +1,8 @@
+<br />
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/b94f648d-1584-4a8f-91d5-ad3b5bb19248" alt="Logo" width="600">
+</div>
+
 # 🏛️ Tezoro
 
 a game-like learning app where users earn rewards by answering quizzes and challenging others turning study into friendly competition, with real benefits for every correct answer
@@ -36,6 +41,9 @@ Tezoro combines **interactive quizzes**, **gamified quests**, and **blockchain r
 - **Web3 Native**: Seamless wallet integration and on-chain rewards
 
 ## 🏗️ Architecture
+
+<img width="939" height="520" alt="image" src="https://github.com/user-attachments/assets/58255b2e-5227-4f13-b5d2-f8f7867da10a" />
+
 
 ### Technical Stack
 ```
