@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
-import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useSwitchChain, useDisconnect } from 'wagmi';
-import { parseEther, formatEther } from 'viem';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { quizGameABI } from '../libs/quizGameABI';
+import { useAccount, useDisconnect, useReadContract, useSwitchChain, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 import { getContractAddresses } from '../libs/constants';
+import { quizGameABI } from '../libs/quizGameABI';
 import { etherlinkTestnet } from '../wagmi';
 
 // Currency configuration for different chains

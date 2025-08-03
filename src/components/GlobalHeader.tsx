@@ -108,7 +108,7 @@ function GlobalHeader({
         >
           Home
         </Link>
-        <Link
+        {/* <Link
           to="/landing"
           style={{
             color: "#e5e7eb",
@@ -125,8 +125,26 @@ function GlobalHeader({
           }}
         >
           Landing
-        </Link>
+        </Link> */}
         <Link
+          to="/demo"
+          style={{
+            color: "#e5e7eb",
+            textDecoration: "none",
+            fontSize: "1rem",
+            fontWeight: "500",
+            transition: "color 0.3s ease"
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = "#00ff87";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = "#e5e7eb";
+          }}
+        >
+          🎮 Play
+        </Link>
+        {/* <Link
           to="/contract"
           style={{
             color: "#e5e7eb",
@@ -143,7 +161,7 @@ function GlobalHeader({
           }}
         >
           Debug
-        </Link>
+        </Link> */}
       </nav>
 
       {/* Right side - Token Balance and Connect Button */}
