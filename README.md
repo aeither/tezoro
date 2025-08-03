@@ -7,6 +7,11 @@
 
 a game-like learning app where users earn rewards by answering quizzes and challenging others turning study into friendly competition, with real benefits for every correct answer
 
+
+## DEMO
+
+https://tezoro.vercel.app/
+
 ## Overview
 
 We're building a fun, game-like learning app where you earn rewards for answering quizzes and challenging others. Think of it as studying meets competition, and every question you get right brings real benefits
