@@ -113,6 +113,8 @@ function QuizGame() {
     const actualAmount = parseEther(selectedAmount)
     const userAnswerValue = BigInt(Math.floor(Math.random() * 100) + 1)
     
+    if (!quizConfig) return
+    
     startQuiz({
       address: contractAddresses.quizGameContractAddress as `0x${string}`,
       abi: quizGameABI,
@@ -124,6 +126,8 @@ function QuizGame() {
 
   // Handle quiz answer submission
   const handleQuizAnswer = (answer: string) => {
+    if (!quizConfig) return
+    
     const newAnswers = [...userAnswers]
     newAnswers[currentQuestionIndex] = answer
     setUserAnswers(newAnswers)
@@ -273,7 +277,7 @@ function QuizGame() {
   }
 
   // If quiz is completed, show end screen
-  if (quizCompleted) {
+  if (quizCompleted && quizConfig) {
     const percentage = Math.round((score / quizConfig.questions.length) * 100)
     
     return (
@@ -339,7 +343,7 @@ function QuizGame() {
   }
 
   // If quiz is active and user has started it, show current question
-  if ((isStartSuccess || (hasActiveQuiz && activeQuizId === quizId)) && !quizCompleted) {
+  if ((isStartSuccess || (hasActiveQuiz && activeQuizId === quizId)) && !quizCompleted && quizConfig) {
     const currentQuestion = quizConfig.questions[currentQuestionIndex]
     
     return (
@@ -415,10 +419,10 @@ function QuizGame() {
           textAlign: "center"
         }}>
           <h1 style={{ color: "#00ff87", marginBottom: "1rem", fontSize: "2.5rem" }}>
-            {quizConfig.title}
+            {quizConfig?.title || "Quiz"}
           </h1>
           <p style={{ color: "#ffffff", marginBottom: "2rem", fontSize: "1.1rem" }}>
-            {quizConfig.description}
+            {quizConfig?.description || "Test your knowledge and earn rewards!"}
           </p>
           
           <div style={{
@@ -436,7 +440,7 @@ function QuizGame() {
               paddingLeft: "1.5rem",
               margin: 0
             }}>
-              <li>📝 {quizConfig.questions.length} questions about {quizConfig.title.toLowerCase()}</li>
+              <li>📝 {quizConfig?.questions.length || 0} questions about {(quizConfig?.title || "quiz").toLowerCase()}</li>
               <li>✅ Get all answers correct for bonus rewards (10-90%)</li>
               <li>🪙 Receive Token1 tokens equal to your entry fee × 100</li>
               <li>⏰ Complete the quiz to claim your rewards</li>
