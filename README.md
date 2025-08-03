@@ -139,19 +139,6 @@ duel_results (duel_id, user_id, score, time_spent, rewards_earned)
 - **Revenue Model**: Platform fees, premium features, enterprise solutions
 - **Growth Strategy**: Community-driven with strategic partnerships
 
-## 📊 Business Metrics
-
-### Key Performance Indicators
-- **User Engagement**: Daily active users, quiz completion rates
-- **Learning Outcomes**: Knowledge retention, skill progression
-- **Economic Activity**: Total rewards distributed, token velocity
-- **Community Growth**: User acquisition, retention, referrals
-
-### Success Metrics
-- **Q1 2024**: 1,000+ active users, $10K+ rewards distributed
-- **Q2 2024**: 10,000+ users, $100K+ rewards, 5+ partnerships
-- **Q4 2024**: 100,000+ users, $1M+ rewards, global expansion
-
 ## 🔧 Quick Start
 
 ### For Developers
@@ -182,22 +169,3 @@ pnpm dev
 3. **Challenge**: Send duel invitation to opponent (friend or random)
 4. **Battle**: Both players take same quiz simultaneously
 5. **Earn**: Winner gets entry fee + opponent's stake + bonus rewards
-
-## 🤝 Contributing
-
-We're building the future of education together. Join us:
-
-- **Discord**: [Tezoro Community](https://discord.gg/tezoro)
-- **Twitter**: [@TezoroAI](https://twitter.com/TezoroAI)
-- **GitHub**: [Contribute to our codebase](https://github.com/your-org/tezoro)
-- **Documentation**: [Learn more about our tech](https://docs.tezoro.ai)
-
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) for details.
-
----
-
-**Tezoro: Where Learning Meets Earning** 🏛️✨
-
-*Built for the future of decentralized education on the Tezos Etherlink*
