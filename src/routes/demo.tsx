@@ -112,7 +112,7 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
   const [score, setScore] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
   const [showResult, setShowResult] = useState(false)
-  const [earnedXTZ, setEarnedXTZ] = useState(0)
+  const [earnedCORE, setEarnedCORE] = useState(0)
   const [streak, setStreak] = useState(3)
   const [isProcessingReward, setIsProcessingReward] = useState(false)
   const [quizStarted, setQuizStarted] = useState(false)
@@ -174,12 +174,12 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
   const questions = [
     {
       question: "What is the native token of Core?",
-      options: ["XTZ", "ETH", "TEZ", "LINK"],
+      options: ["CORE", "ETH", "BTC", "LINK"],
       correct: 0,
       reward: 0.05
     },
     {
-      question: "Which consensus mechanism does Tezos use?",
+      question: "Which consensus mechanism does Core use?",
       options: ["Proof of Work", "Proof of Stake", "Delegated PoS", "Proof of Authority"],
       correct: 1,
       reward: 0.05
@@ -195,8 +195,8 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
     if (answerIndex === questions[currentQuestion].correct) {
       setScore(score + 1)
       const reward = questions[currentQuestion].reward
-      setEarnedXTZ(earnedXTZ + reward)
-      toast.success(`✅ Correct! +${reward} XTZ earned`)
+      setEarnedCORE(earnedCORE + reward)
+      toast.success(`✅ Correct! +${reward} CORE earned`)
     } else {
       toast.error("❌ Incorrect answer")
     }
@@ -228,7 +228,7 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
           <div className="text-6xl mb-4">🎮</div>
           <h3 className="text-2xl font-bold text-white mb-4">Ready to Start Quiz?</h3>
           <p className="text-gray-400 mb-6">
-            Entry fee: 0.01 XTZ • Potential rewards: Up to 0.1 XTZ
+            Entry fee: 0.01 CORE • Potential rewards: Up to 0.1 CORE
           </p>
           
           <button
@@ -263,8 +263,8 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
       {/* User Stats */}
       <div className="grid grid-cols-3 gap-4 mb-8">
         <div className="bg-black/30 border border-emerald-500/30 rounded-xl p-4 text-center">
-          <div className="text-2xl font-bold text-emerald-400">{earnedXTZ.toFixed(3)}</div>
-          <div className="text-sm text-gray-400">XTZ Earned</div>
+          <div className="text-2xl font-bold text-emerald-400">{earnedCORE.toFixed(3)}</div>
+          <div className="text-sm text-gray-400">CORE Earned</div>
         </div>
         <div className="bg-black/30 border border-emerald-500/30 rounded-xl p-4 text-center">
           <div className="text-2xl font-bold text-emerald-400">{streak}</div>
@@ -328,7 +328,7 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
               ⚡ Transaction confirmed in 0.4s on Core
               {selectedAnswer === questions[currentQuestion].correct && (
                 <div className="text-sm text-green-300 mt-1">
-                  🎉 +{questions[currentQuestion].reward} XTZ added to wallet
+                  🎉 +{questions[currentQuestion].reward} CORE added to wallet
                 </div>
               )}
             </div>
@@ -457,20 +457,20 @@ function Step2PvPDuel({ onNext }: { onNext: () => void }) {
   useEffect(() => {
     const loadOracleData = async () => {
       try {
-        const priceData = await RedStoneOracle.getPrice('XTZ')
+        const priceData = await RedStoneOracle.getPrice('CORE')
         const options = ["$0.95", "$1.23", "$1.45", "$2.10"]
-        const questionData = RedStoneOracle.formatPriceQuestion('XTZ', priceData.price, options)
+        const questionData = RedStoneOracle.formatPriceQuestion('CORE', priceData.price, options)
         setOracleQuestion({
           ...questionData,
           isOracle: true
         })
         toast.success("🔮 RedStone Oracle data loaded", { 
-          description: `Current XTZ price: $${priceData.price}` 
+          description: `Current CORE price: $${priceData.price}` 
         })
       } catch (error) {
         console.error('Oracle error:', error)
         setOracleQuestion({
-          question: "What's the current price of XTZ? (RedStone Oracle)",
+          question: "What's the current price of CORE? (RedStone Oracle)",
           options: ["$0.95", "$1.23", "$1.45", "$2.10"],
           correct: 1,
           isOracle: true
@@ -508,7 +508,7 @@ function Step2PvPDuel({ onNext }: { onNext: () => void }) {
       
       if (userCorrect && !opponentCorrect) {
         setWinner('user')
-        toast.success("🏆 You win! +0.1 XTZ")
+        toast.success("🏆 You win! +0.1 CORE")
       } else if (!userCorrect && opponentCorrect) {
         setWinner('opponent')
         toast.error("😔 Opponent wins this round")
@@ -545,7 +545,7 @@ function Step2PvPDuel({ onNext }: { onNext: () => void }) {
           <div className="text-6xl mb-4">⚔️</div>
           <h3 className="text-2xl font-bold text-white mb-4">Ready for PvP Battle?</h3>
           <p className="text-gray-400 mb-6">
-            Entry fee: 0.02 XTZ • Winner takes all + bonus rewards
+            Entry fee: 0.02 CORE • Winner takes all + bonus rewards
           </p>
           
           <button
@@ -715,7 +715,7 @@ function Step3GuildSystem({ onNext }: { onNext: () => void }) {
       await BlockchainUtils.triggerMetaMaskTransaction({
         to: contractAddresses.guildSystemContractAddress,
         value: parseEther("0.05").toString(),
-        description: "Creating 'Tezos Titans' guild with 0.05 XTZ initial treasury"
+        description: "Creating 'Tezos Titans' guild with 0.05 CORE initial treasury"
       })
       setGuildState('formed')
       setTreasury(0.05)
@@ -732,7 +732,7 @@ function Step3GuildSystem({ onNext }: { onNext: () => void }) {
       await BlockchainUtils.triggerMetaMaskTransaction({
         to: contractAddresses.guildSystemContractAddress,
         value: parseEther("0.1").toString(),
-        description: "Contributing 0.1 XTZ to guild treasury"
+        description: "Contributing 0.1 CORE to guild treasury"
       })
       setTreasury(treasury + 0.1)
       toast.success("💰 Treasury contribution successful!")
@@ -746,7 +746,7 @@ function Step3GuildSystem({ onNext }: { onNext: () => void }) {
       await BlockchainUtils.triggerMetaMaskTransaction({
         to: contractAddresses.guildSystemContractAddress,
         value: parseEther("0.2").toString(),
-        description: "Starting Guild vs Guild battle with 0.2 XTZ prize pool"
+        description: "Starting Guild vs Guild battle with 0.2 CORE prize pool"
       })
       setGuildState('battle')
       toast.success("⚔️ Guild battle started!")
@@ -772,7 +772,7 @@ function Step3GuildSystem({ onNext }: { onNext: () => void }) {
           <div className="text-6xl mb-4">🛡️</div>
           <h3 className="text-2xl font-bold text-white mb-4">Ready to Form Your Guild?</h3>
           <p className="text-gray-400 mb-6">
-            Initial treasury: 0.05 XTZ • Invite friends via Farcaster
+            Initial treasury: 0.05 CORE • Invite friends via Farcaster
           </p>
           
           <button
@@ -827,7 +827,7 @@ function Step3GuildSystem({ onNext }: { onNext: () => void }) {
           <div className="bg-green-900/30 border border-green-500/30 rounded-xl p-6">
             <div className="text-4xl mb-2">🏆</div>
             <div className="text-white font-bold text-2xl">Tezos Titans WIN!</div>
-            <div className="text-green-400">+0.5 XTZ added to guild treasury</div>
+            <div className="text-green-400">+0.5 CORE added to guild treasury</div>
             <div className="text-sm text-gray-400 mt-2">
               Goldsky leaderboard updated in real-time
             </div>
@@ -885,7 +885,7 @@ function Step3GuildSystem({ onNext }: { onNext: () => void }) {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Treasury:</span>
-                <span className="text-emerald-400">{treasury.toFixed(2)} XTZ</span>
+                <span className="text-emerald-400">{treasury.toFixed(2)} CORE</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Ranking:</span>
@@ -969,7 +969,7 @@ function Step3GuildSystem({ onNext }: { onNext: () => void }) {
         <div className="bg-green-900/30 border border-green-500/30 rounded-xl p-6">
           <div className="text-4xl mb-2">🏆</div>
           <div className="text-white font-bold text-2xl">Tezos Titans WIN!</div>
-          <div className="text-green-400">+0.5 XTZ added to guild treasury</div>
+          <div className="text-green-400">+0.5 CORE added to guild treasury</div>
           <div className="text-sm text-gray-400 mt-2">
             Goldsky leaderboard updated in real-time
           </div>
@@ -1101,7 +1101,7 @@ function Step4NFTQuizzes({ onNext }: { onNext: () => void }) {
             disabled={!address}
             className="px-8 py-4 bg-blue-600 text-white rounded-xl font-bold text-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            🖼️ Mint Quiz NFT (0.01 XTZ)
+            🖼️ Mint Quiz NFT (0.01 CORE)
           </button>
           
           {!address && (
@@ -1139,11 +1139,11 @@ function Step4NFTQuizzes({ onNext }: { onNext: () => void }) {
             </div>
             <div className="flex justify-between">
               <span className="text-gray-400">Royalties Earned:</span>
-              <span className="text-green-400">{royaltyEarned} XTZ</span>
+              <span className="text-green-400">{royaltyEarned} CORE</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-400">Floor Price:</span>
-              <span className="text-white">0.1 XTZ</span>
+              <span className="text-white">0.1 CORE</span>
             </div>
           </div>
         </div>
@@ -1153,8 +1153,8 @@ function Step4NFTQuizzes({ onNext }: { onNext: () => void }) {
           <div className="space-y-3">
             <div className="bg-green-900/30 border border-green-500/30 rounded-lg p-3">
               <div className="text-green-400 font-bold">Quiz Completed ✅</div>
-              <div className="text-sm text-gray-400">User paid 0.02 XTZ</div>
-              <div className="text-sm text-green-400">You earned 0.002 XTZ royalty</div>
+              <div className="text-sm text-gray-400">User paid 0.02 CORE</div>
+              <div className="text-sm text-green-400">You earned 0.002 CORE royalty</div>
             </div>
           </div>
         </div>

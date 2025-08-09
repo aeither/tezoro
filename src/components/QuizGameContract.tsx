@@ -34,10 +34,10 @@ const QUIZ_CONFIGS = {
     description: 'Learn about decentralized finance protocols',
     questions: 5
   },
-  'tezos-etherlink': {
-    id: 'tezos-etherlink',
-    title: 'Tezos & Etherlink',
-    description: 'Learn about Tezos blockchain and Etherlink L2',
+  'coredao': {
+    id: 'coredao',
+    title: 'Core DAO Ecosystem',
+    description: 'Learn about the Core blockchain ecosystem',
     questions: 5
   }
 } as const;
@@ -51,7 +51,7 @@ function QuizGameContract() {
   const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(coreTestnet.id);
   
   // Get currency config for current chain
-  const currencyConfig = chain ? (CURRENCY_CONFIG[chain.id as keyof typeof CURRENCY_CONFIG] || CURRENCY_CONFIG.default) : CURRENCY_CONFIG[128123];
+  const currencyConfig = chain ? (CURRENCY_CONFIG[chain.id as keyof typeof CURRENCY_CONFIG] || CURRENCY_CONFIG.default) : CURRENCY_CONFIG.default;
 
   // State for quiz interaction (minimal state needed for this component)
   const [showQuiz, setShowQuiz] = useState(false);

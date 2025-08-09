@@ -287,7 +287,7 @@ function ContractDebugPage() {
   //         </p>
   //         <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "2rem" }}>
   //           <button
-  //                             onClick={() => switchChain({ chainId: etherlinkTestnet.id })}
+  //                             onClick={() => switchChain({ chainId: coreTestnet.id })}
   //             style={{
   //               backgroundColor: "#667eea",
   //               color: "white",
@@ -300,10 +300,10 @@ function ContractDebugPage() {
   //               boxShadow: "0 4px 6px rgba(102, 126, 234, 0.3)"
   //             }}
   //           >
-  //                             Switch to Etherlink Testnet
+  //                             Switch to Core Testnet
   //           </button>
   //           <button
-  //                             // Only Etherlink Testnet is supported now
+  //                             // Only Core Testnet is supported now
   //             style={{
   //               backgroundColor: "#22c55e",
   //               color: "white",
@@ -316,7 +316,7 @@ function ContractDebugPage() {
   //               boxShadow: "0 4px 6px rgba(34, 197, 94, 0.3)"
   //             }}
   //           >
-  //                             // Only Etherlink Testnet is supported
+  //                             // Only Core Testnet is supported
   //           </button>
   //         </div>
   //       </div>

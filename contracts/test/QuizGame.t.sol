@@ -87,7 +87,7 @@ contract QuizGameTest is Test {
         vm.deal(player, 1 ether);
         vm.prank(player);
         vm.expectRevert("Must send ETH");
-        quizGame.startQuiz{value: 0}("tezos-etherlink", 42);
+        quizGame.startQuiz{value: 0}("coredao", 42);
     }
 
     function testStartQuiz_EmptyQuizId() public {
@@ -119,7 +119,7 @@ contract QuizGameTest is Test {
     function testQuizIdStoredCorrectly() public {
         vm.deal(player, 1 ether);
         
-        string memory quizId = "tezos-etherlink";
+        string memory quizId = "coredao";
         
         // Start quiz
         vm.prank(player);

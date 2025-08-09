@@ -14,7 +14,7 @@ graph TD
     D --> E[NFT Quiz Creation]
     E --> F[Creator Economy Participation]
     
-    B --> B1[Earn XTZ Rewards]
+    B --> B1[Earn CORE Rewards]
     C --> C1[Win Prize Pools]
     D --> D1[Guild Treasury Growth]
     E --> E1[Royalty Revenue Stream]
@@ -64,7 +64,7 @@ function completeQuiz(uint256 finalAnswer) external {
 #### **Blockchain Services**
 - **Wagmi**: React hooks for contract interactions
 - **Viem**: Ethereum library for transaction handling
-- **Etherlink**: Fast finality for instant rewards
+- **Core DAO**: Fast finality for instant rewards
 
 ---
 
@@ -82,7 +82,7 @@ function completeQuiz(uint256 finalAnswer) external {
 // Frontend Component: Step2PvPDuel
 ┌─ User clicks "Start PvP Duel"
 ├─ useWriteContract() calls QuizDuel.startDuel()
-├─ MetaMask popup for entry fee (0.02 XTZ)
+├─ MetaMask popup for entry fee (0.02 CORE)
 ├─ Transaction success → Matchmaking begins
 ├─ RedStone Oracle fetches live price data
 ├─ Dynamic question generation with current market data
@@ -142,7 +142,7 @@ static formatPriceQuestion(symbol: string, price: number, options: string[]) {
 // Frontend Component: Step3GuildSystem
 ┌─ User clicks "Create Guild On-Chain"
 ├─ BlockchainUtils.triggerMetaMaskTransaction()
-├─ Guild contract deployment with initial 0.05 XTZ treasury
+├─ Guild contract deployment with initial 0.05 CORE treasury
 ├─ User clicks "Contribute to Treasury"
 ├─ Additional MetaMask transaction for treasury funding
 ├─ User clicks "Start Guild Battle"
@@ -261,7 +261,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981 {
 │   ├─ Creator royalty (10%)
 │   ├─ Platform fee (5%)
 │   └─ Player rewards (85%)
-├─ Instant settlement on Etherlink
+├─ Instant settlement on Core
 └─ Creator passive income stream
 ```
 
@@ -293,7 +293,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981 {
 ### **Infrastructure Layer**
 ```yaml
 # Blockchain Infrastructure
-├─ Etherlink Testnet      # Fast, low-cost transactions
+├─ Core Testnet2      # Fast, low-cost transactions
 ├─ MetaMask              # Wallet integration
 ├─ RedStone Oracle       # Real-time price feeds
 ├─ Goldsky              # Blockchain indexing
@@ -401,8 +401,8 @@ sequenceDiagram
 
 ## 🚀 Scalability & Future Architecture
 
-### **Layer 2 Optimization**
-- **Etherlink Integration**: Sub-second finality for real-time gaming
+### **Network Optimization**
+- **Core DAO Integration**: Sub-second finality for real-time gaming
 - **Batch Operations**: Group multiple actions for gas efficiency
 - **State Channels**: Potential for off-chain battle mechanics
 

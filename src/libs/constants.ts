@@ -2,8 +2,8 @@
 const CONTRACT_ADDRESSES = {
   // Core Testnet2
   1114: {
-    token1ContractAddress: "0x0000000000000000000000000000000000000000", // TODO: Deploy on Core Testnet
-    quizGameContractAddress: "0x0000000000000000000000000000000000000000", // TODO: Deploy on Core Testnet
+    token1ContractAddress: "0xdED87fD6213A8f4ea824B8c74128fAf3DE65BFFE",
+    quizGameContractAddress: "0x9a486C66c308db15aD6a3d1aF4cb20244bD1e2c3",
     // New demo contracts (placeholder addresses - update after deployment)
     quizDuelContractAddress: "0x0000000000000000000000000000000000000001",
     guildSystemContractAddress: "0x0000000000000000000000000000000000000002",

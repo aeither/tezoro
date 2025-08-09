@@ -311,7 +311,7 @@ function QuizGame() {
             }}>
               <h3 style={{ color: "#00ff87", marginBottom: "1rem" }}>🪙 Your Rewards</h3>
               <p style={{ color: "#ffffff", margin: "0.5rem 0" }}>
-                Base Tokens: {selectedAmount} XTZ × 100 = {parseFloat(selectedAmount) * 100} TK1
+                Base Tokens: {selectedAmount} CORE × 100 = {parseFloat(selectedAmount) * 100} TK1
               </p>
               <p style={{ color: "#ffffff", margin: "0.5rem 0" }}>
                 Bonus: {score === quizConfig.questions.length ? '10-90% additional tokens for all correct answers!' : 'Better luck next time!'}
@@ -454,7 +454,7 @@ function QuizGame() {
               marginBottom: "0.5rem",
               fontWeight: "500"
             }}>
-              Entry Amount (XTZ):
+              Entry Amount (CORE):
             </label>
             <input
               type="number"
@@ -490,7 +490,7 @@ function QuizGame() {
               minWidth: "200px"
             }}
           >
-            {isStartPending ? "Starting..." : `🎮 Start Quiz (${selectedAmount} XTZ)`}
+            {isStartPending ? "Starting..." : `🎮 Start Quiz (${selectedAmount} CORE)`}
           </button>
         </div>
       </div>
