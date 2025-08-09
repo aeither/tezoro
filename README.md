@@ -47,7 +47,7 @@ Tezoro combines **interactive quizzes**, **gamified quests**, and **blockchain r
 
 ## 🏗️ Architecture
 
-<img width="939" height="520" alt="image" src="https://github.com/user-attachments/assets/58255b2e-5227-4f13-b5d2-f8f7867da10a" />
+<img width="820" height="450" alt="image" src="https://github.com/user-attachments/assets/b3cbd833-80e2-4aea-9d81-9d92c33f7c82" />
 
 
 ### Technical Stack
