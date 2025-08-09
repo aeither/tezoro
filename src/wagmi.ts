@@ -1,6 +1,6 @@
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { SUPPORTED_CHAINS } from './libs/supportedChains';
-import { etherlinkTestnet } from 'wagmi/chains';
+import { coreTestnet } from './libs/coreChain';
 
 const config = getDefaultConfig({
   appName: 'Tezoro',
@@ -9,7 +9,7 @@ const config = getDefaultConfig({
   ssr: true,
 });
 
-export { config, etherlinkTestnet };
+export { config, coreTestnet };
 
 declare module "wagmi" {
   interface Register {

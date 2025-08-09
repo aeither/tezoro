@@ -5,7 +5,7 @@ import { parseEther } from 'viem'
 import { toast } from 'sonner'
 import { quizGameABI } from '../libs/quizGameABI'
 import { getContractAddresses } from '../libs/constants'
-import { etherlinkTestnet } from '../wagmi'
+import { coreTestnet } from '../wagmi'
 import GlobalHeader from '../components/GlobalHeader'
 
 interface QuizSearchParams {
@@ -50,7 +50,7 @@ function QuizGame() {
   const [score, setScore] = useState(0)
   const [selectedAmount, setSelectedAmount] = useState('0.1')
 
-  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(etherlinkTestnet.id)
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(coreTestnet.id)
   const quizConfig = quizId ? QUIZ_CONFIGS[quizId as keyof typeof QUIZ_CONFIGS] : null
 
   // Contract reads
@@ -163,7 +163,7 @@ function QuizGame() {
   }
   
   // Check if user is on correct chain
-  const isCorrectChain = chain?.id === etherlinkTestnet.id
+  const isCorrectChain = chain?.id === coreTestnet.id
 
   if (!isCorrectChain) {
     return (
@@ -177,10 +177,10 @@ function QuizGame() {
         }}>
           <h2 style={{ color: "#ffffff", marginBottom: "1rem" }}>Wrong Network</h2>
           <p style={{ color: "#9ca3af", marginBottom: "2rem" }}>
-            Please switch to Etherlink Testnet to play this quiz.
+            Please switch to Core Testnet to play this quiz.
           </p>
           <button 
-            onClick={() => switchChain({ chainId: etherlinkTestnet.id })}
+            onClick={() => switchChain({ chainId: coreTestnet.id })}
             style={{
               backgroundColor: "#00ff87",
               color: "#0a0e0a",
@@ -192,7 +192,7 @@ function QuizGame() {
               cursor: "pointer"
             }}
           >
-            Switch to Etherlink Testnet
+            Switch to Core Testnet
           </button>
         </div>
       </div>

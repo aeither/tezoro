@@ -4,17 +4,17 @@ import { toast } from 'sonner';
 import { useAccount, useDisconnect, useReadContract, useSwitchChain, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 import { getContractAddresses } from '../libs/constants';
 import { quizGameABI } from '../libs/quizGameABI';
-import { etherlinkTestnet } from '../wagmi';
+import { coreTestnet } from '../wagmi';
 
 // Currency configuration for different chains
 const CURRENCY_CONFIG = {
-  128123: { // Etherlink Testnet
-    symbol: 'XTZ',
+  1114: { // Core Testnet2
+    symbol: 'CORE',
     multiplier: 1,
     defaultAmounts: ['0.1', '0.5', '2.5']
   },
   default: { // Fallback configuration
-    symbol: 'XTZ',
+    symbol: 'CORE',
     multiplier: 1,
     defaultAmounts: ['0.1', '0.5', '2.5']
   }
@@ -48,7 +48,7 @@ function QuizGameContract() {
   const { disconnect } = useDisconnect();
 
   // Get contract addresses based on current chain
-  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(etherlinkTestnet.id);
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(coreTestnet.id);
   
   // Get currency config for current chain
   const currencyConfig = chain ? (CURRENCY_CONFIG[chain.id as keyof typeof CURRENCY_CONFIG] || CURRENCY_CONFIG.default) : CURRENCY_CONFIG[128123];
@@ -112,7 +112,7 @@ function QuizGameContract() {
 
 
   // Check if user is on correct chain
-  const supportedChainIds = [128123]; // Only Etherlink Testnet
+  const supportedChainIds = [1114]; // Only Core Testnet2
   const isCorrectChain = chain ? supportedChainIds.includes(chain.id) : false;
 
   // If not on correct chain, show network switch options
@@ -126,11 +126,11 @@ function QuizGameContract() {
       }}>
         <h2 style={{ color: "#ffffff", marginBottom: "1rem" }}>Wrong Network</h2>
         <p style={{ color: "#9ca3af", marginBottom: "2rem" }}>
-          Please switch to Etherlink Testnet to play the quiz game.
+          Please switch to Core Testnet to play the quiz game.
         </p>
         <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "2rem" }}>
           <button 
-            onClick={() => switchChain({ chainId: etherlinkTestnet.id })}
+            onClick={() => switchChain({ chainId: coreTestnet.id })}
             style={{
               backgroundColor: "#00ff87",
               color: "#0a0e0a",
@@ -143,7 +143,7 @@ function QuizGameContract() {
               transition: "all 0.3s ease"
             }}
           >
-            Switch to Etherlink Testnet
+            Switch to Core Testnet
           </button>
         </div>
         <button 

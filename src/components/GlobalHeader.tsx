@@ -18,7 +18,7 @@ function GlobalHeader({
   const { address, chain } = useAccount();
   
   // Get contract addresses based on current chain
-  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(128123); // Default to Etherlink Testnet
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(1114); // Default to Core Testnet
 
   // Get Token1 balance
   const { data: tokenBalance } = useBalance({

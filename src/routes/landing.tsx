@@ -11,7 +11,7 @@ function LandingPage() {
             Welcome to Tezoro
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            Master blockchain knowledge through gamified quizzes and earn real rewards on Tezos Etherlink.
+            Master blockchain knowledge through gamified quizzes and earn real rewards on Core blockchain.
             Challenge yourself, climb leaderboards, and get rewarded for learning!
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
@@ -79,7 +79,7 @@ function LandingPage() {
       <div className="quiz-card rounded-3xl p-12 text-center animate-bounce-in" style={{ animationDelay: '1000ms' }}>
         <h2 className="text-4xl font-bold text-primary mb-8">How It Works</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-          <StepCard step="1" title="Connect" description="Connect your wallet to Etherlink Testnet" />
+          <StepCard step="1" title="Connect" description="Connect your wallet to Core Testnet" />
           <StepCard step="2" title="Choose" description="Select from Web3, DeFi, or Tezos quizzes" />
           <StepCard step="3" title="Play" description="Answer questions and earn tokens" />
           <StepCard step="4" title="Claim" description="Get up to 190% returns for perfect scores!" />

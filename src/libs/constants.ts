@@ -1,9 +1,9 @@
 // Contract addresses by chain ID
 const CONTRACT_ADDRESSES = {
-  // Etherlink Testnet
-  128123: {
-    token1ContractAddress: "0xdbea77ee1b18454d31a83cc2eef8e8670cc659fc",
-    quizGameContractAddress: "0x79d2077580679166485d9fcfc46b3be3b6c15d74",
+  // Core Testnet2
+  1114: {
+    token1ContractAddress: "0x0000000000000000000000000000000000000000", // TODO: Deploy on Core Testnet
+    quizGameContractAddress: "0x0000000000000000000000000000000000000000", // TODO: Deploy on Core Testnet
     // New demo contracts (placeholder addresses - update after deployment)
     quizDuelContractAddress: "0x0000000000000000000000000000000000000001",
     guildSystemContractAddress: "0x0000000000000000000000000000000000000002",
@@ -19,9 +19,9 @@ export function getContractAddresses(chainId: number) {
   };
 }
 
-// Legacy exports for backward compatibility (defaults to Etherlink Testnet)
-export const token1ContractAddress = CONTRACT_ADDRESSES[128123].token1ContractAddress;
-export const quizGameContractAddress = CONTRACT_ADDRESSES[128123].quizGameContractAddress;
+// Legacy exports for backward compatibility (defaults to Core Testnet)
+export const token1ContractAddress = CONTRACT_ADDRESSES[1114].token1ContractAddress;
+export const quizGameContractAddress = CONTRACT_ADDRESSES[1114].quizGameContractAddress;
 
 // Demo configuration
 export const DEMO_CONFIG = {
@@ -34,7 +34,7 @@ export const DEMO_CONFIG = {
   },
   MOCK_DATA: {
     ORACLE_PRICES: {
-      XTZ: { price: 1.23, index: 1 },
+      CORE: { price: 1.23, index: 1 },
       ETH: { price: 2450.50, index: 2 }
     },
     GUILD_MEMBERS: [

@@ -49,11 +49,11 @@ $ anvil
 
 The deployment script uses CREATE2 to deploy contracts to the same deterministic address across all blockchains.
 
-#### Deploy to Etherlink Testnet
+#### Deploy to Core Testnet2
 
 ```shell
-# Etherlink Testnet (Ghostnet)
-source .env && rm -rf cache out && forge build && forge script --chain 128123 script/QuizGame.s.sol:QuizGameScript --rpc-url https://node.ghostnet.etherlink.com --broadcast -vvvv --private-key ${PRIVATE_KEY}
+# Core Testnet2
+source .env && rm -rf cache out && forge build && forge script --chain 1114 script/QuizGame.s.sol:QuizGameScript --rpc-url https://rpc.test2.btcs.network --broadcast -vvvv --private-key ${PRIVATE_KEY}
 ```
 
 #### Predict Addresses (Without Deploying)
@@ -61,19 +61,19 @@ source .env && rm -rf cache out && forge build && forge script --chain 128123 sc
 You can predict the contract addresses before deployment:
 
 ```shell
-# Predict addresses for Etherlink Testnet
-forge script script/QuizGame.s.sol:QuizGameScript --sig "predictAddresses()" --rpc-url https://node.ghostnet.etherlink.com
+# Predict addresses for Core Testnet2
+forge script script/QuizGame.s.sol:QuizGameScript --sig "predictAddresses()" --rpc-url https://rpc.test2.btcs.network
 ```
 
 ### Verify
 
 ```shell
-# Etherlink Testnet
+# Core Testnet2
 forge verify-contract \
-  --chain-id 128123 \
-  --rpc-url https://node.ghostnet.etherlink.com \
+  --chain-id 1114 \
+  --rpc-url https://rpc.test2.btcs.network \
   --verifier blockscout \
-  --verifier-url 'https://testnet.explorer.etherlink.com/api/' \
+  --verifier-url 'https://scan.test2.btcs.network/api/' \
   <CONTRACT_ADDRESS> \
   src/QuizGame.sol:QuizGame
 ```

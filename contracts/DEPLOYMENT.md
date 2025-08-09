@@ -1,45 +1,57 @@
 
 ## 🚀 Deployment Commands
 
-### Etherlink Testnet (Ghostnet) - Chain ID: 128123
+### Core Testnet2 - Chain ID: 1114
 ```bash
-source .env && rm -rf cache out && forge build && forge script --chain 128123 script/QuizGame.s.sol:QuizGameScript --rpc-url https://node.ghostnet.etherlink.com --broadcast -vvvv --private-key ${PRIVATE_KEY}
+source .env && rm -rf cache out && forge build && forge script --chain 1114 script/QuizGame.s.sol:QuizGameScript --rpc-url https://rpc.test2.btcs.network --broadcast -vvvv --private-key ${PRIVATE_KEY}
 ```
 
-## 🌐 Etherlink Testnet Network Details
+## 🌐 Core Testnet2 Network Details
 
 | Parameter | Value |
 |-----------|-------|
-| **Network Name** | Etherlink Testnet |
-| **EVM version** | Cancun |
-| **RPC Endpoint** | https://node.ghostnet.etherlink.com |
-| **Websocket Endpoint** | Not yet publicly available |
-| **Relay Endpoint** | https://relay.ghostnet.etherlink.com |
-| **Tezos Smart Rollup address** | sr18wx...MLqg |
-| **Chain ID** | 128123 |
-| **Currency Symbol** | XTZ |
-| **Block Explorer URL** | https://testnet.explorer.etherlink.com/ |
-| **Wallet Derivation Path** | m/44'/60'/0'/0 |
+| **Network Name** | Core Testnet2 |
+| **Chain ID** | 1114 (0x45a) |
+| **RPC Endpoint** | https://rpc.test2.btcs.network |
+| **Archive Node RPC** | https://rpcar.test2.btcs.network |
+| **WebSocket Endpoint** | wss://rpc.test2.btcs.network/wsp |
+| **Currency Symbol** | tCORE |
+| **Block Explorer URL** | https://scan.test2.btcs.network/ |
+| **Faucet** | Available through Core DAO testnet faucet |
+
+**Note**: This is the latest and officially supported testnet for the Core blockchain. The previous testnet (chain ID 1115) is now deprecated and no longer maintained.
 
 ## 📋 Contract Verification
 
-After deployment, verify your contracts on the Etherlink Testnet block explorer:
+### Core Testnet2 Verification
+
+After deployment, verify your contracts on the Core Testnet2 block explorer:
 
 ```bash
-# Verify QuizGame contract
+# Verify QuizGame contract on Core Testnet2
 forge verify-contract \
---chain-id 128123 \
---rpc-url https://node.ghostnet.etherlink.com \
---verifier-url 'https://testnet.explorer.etherlink.com/api/' \
+--chain-id 1114 \
+--rpc-url https://rpc.test2.btcs.network \
+--verifier-url 'https://scan.test2.btcs.network/api/' \
 --verifier blockscout \
 <CONTRACT_ADDRESS> \
 src/QuizGame.sol:QuizGame
+
+# Verify Token1 contract on Core Testnet2
+forge verify-contract \
+--chain-id 1114 \
+--rpc-url https://rpc.test2.btcs.network \
+--verifier-url 'https://scan.test2.btcs.network/api/' \
+--verifier blockscout \
+<TOKEN_CONTRACT_ADDRESS> \
+src/QuizGame.sol:Token1
 ```
 
 ## 🔗 Useful Resources
 
-- **Etherlink Documentation**: https://docs.etherlink.com/
-- **Etherlink Faucet**: Get XTZ for testing on Ghostnet
-- **Block Explorer**: https://testnet.explorer.etherlink.com/
-- **Smart Rollup Snapshots**: https://snapshots.tzinit.org/etherlink-ghostnet/
-- **EVM Node Snapshots**: https://snapshotter-sandbox.nomadic-labs.eu/etherlink-ghostnet/
+### Core Blockchain Resources
+- **Core DAO Documentation**: https://docs.coredao.org/
+- **Core Testnet2 Block Explorer**: https://scan.test2.btcs.network/
+- **Core DAO Testnet Faucet**: https://scan.test2.btcs.network/faucet
+- **Core DAO Official Website**: https://coredao.org/
+- **Core DAO GitHub**: https://github.com/coredao-org

@@ -18,7 +18,7 @@ We're building a fun, game-like learning app where you earn rewards for answerin
 
 **The Future of Decentralized Learning & Earning**
 
-Tezoro transforms education into a gamified experience where knowledge acquisition directly translates to real rewards. Built for the Tezos Etherlink ecosystem, we're bridging the gap between traditional learning and Web3 incentives.
+Tezoro transforms education into a gamified experience where knowledge acquisition directly translates to real rewards. Built for the Core blockchain ecosystem, we're bridging the gap between traditional learning and Web3 incentives.
 
 ## 🎯 The Problem
 
@@ -54,7 +54,7 @@ Tezoro combines **interactive quizzes**, **gamified quests**, and **blockchain r
 ```
 Frontend: React + TypeScript + Vite
 Database: PostgreSQL + Drizzle ORM
-Web3: Wagmi + Viem + Etherlink Testnet
+Web3: Wagmi + Viem + Core Testnet
 UI: Tailwind CSS + Custom Design System
 Deployment: Vercel + Railway
 Smart Contracts: Solidity 0.8.30 + Foundry
@@ -88,7 +88,7 @@ duel_results (duel_id, user_id, score, time_spent, rewards_earned)
 ## 🔗 Smart Contracts
 
 ### Contract Architecture
-All smart contracts are deployed on **Etherlink Testnet** (Chain ID: 128123) for fast, low-cost transactions.
+All smart contracts are deployed on **Core Testnet2** (Chain ID: 1114) for fast, low-cost transactions.
 
 #### **Token1.sol** - Reward Token
 ```solidity
@@ -236,7 +236,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981 {
 }
 ```
 
-### Etherlink Integration
+### Core Blockchain Integration
 - **Fast Finality**: Sub-second transaction confirmation enables real-time gaming
 - **Low Gas Costs**: Affordable fees make micro-rewards economically viable  
 - **EVM Compatibility**: Seamless integration with existing Web3 tooling
@@ -258,7 +258,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981 {
 
 ### 💰 Reward Economy
 - **Yuzu Points**: Earned through learning activities
-- **XTZ Token Conversion**: Points convert to Etherlink XTZ tokens
+- **CORE Token Conversion**: Points convert to Core tokens
 - **Seasonal Rewards**: Bonus distributions for top performers
 - **NFT Achievements**: On-chain proof of learning milestones
 
@@ -274,7 +274,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981 {
 ### Phase 1: Foundation (Q1 2024) ✅
 - [x] Core quiz platform with Farcaster integration
 - [x] Basic reward system and leaderboards
-- [x] Smart contract deployment on Etherlink Testnet
+- [x] Smart contract deployment on Core Testnet
 - [x] Initial user acquisition and testing
 
 ### Phase 2: Growth (Q2 2024)
@@ -299,7 +299,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981 {
 ## 🏆 Competitive Advantage
 
 ### Why Tezoro Wins
-1. **First-Mover Advantage**: First learn-to-earn platform on Etherlink
+1. **First-Mover Advantage**: First learn-to-earn platform on Core blockchain
 2. **Social Integration**: Native Farcaster integration drives viral growth
 3. **Token Economics**: Sustainable reward model with real utility
 4. **Community-Driven**: User-generated content and governance
@@ -317,7 +317,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981 {
 
 ### Demo Access
 - **Live Demo**: Navigate to `/demo` route for interactive 4-step demo
-- **Smart Contracts**: All contracts deployed on Etherlink Testnet (Chain ID: 128123)
+- **Smart Contracts**: All contracts deployed on Core Testnet2 (Chain ID: 1114)
 - **Contract Addresses**: See `src/libs/constants.ts` for deployed addresses
 
 ### For Developers
@@ -338,7 +338,7 @@ pnpm dev
 cd contracts
 forge build
 forge test
-forge script script/DeployDemoContracts.s.sol --rpc-url https://node.ghostnet.etherlink.com --broadcast
+forge script script/DeployDemoContracts.s.sol --rpc-url https://rpc.test2.btcs.network --broadcast
 ```
 
 ### For Users
@@ -346,7 +346,7 @@ forge script script/DeployDemoContracts.s.sol --rpc-url https://node.ghostnet.et
 2. **Sign in with Farcaster**: Authenticate your social identity
 3. **Start Learning**: Take daily quizzes and complete quests
 4. **Earn Rewards**: Accumulate points and compete on leaderboards
-5. **Convert to XTZ**: Exchange points for Etherlink XTZ tokens
+5. **Convert to CORE**: Exchange points for Core tokens
 
 ### Demo Flow (Available Now)
 1. **Solo Quiz**: Start quiz → Answer questions → Claim rewards

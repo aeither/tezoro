@@ -120,7 +120,7 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
   const { address, chain } = useAccount()
 
   // Smart contract integration
-  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(128123)
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(1114)
   const { writeContract: startQuiz, isPending: isStartPending, data: startHash } = useWriteContract()
   const { writeContract: completeQuiz, isPending: isCompletePending, data: completeHash } = useWriteContract()
   
@@ -173,7 +173,7 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
 
   const questions = [
     {
-      question: "What is the native token of Etherlink?",
+      question: "What is the native token of Core?",
       options: ["XTZ", "ETH", "TEZ", "LINK"],
       correct: 0,
       reward: 0.05
@@ -220,7 +220,7 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
             🎯 Step 1: Solo Quiz - Learn & Earn
           </h1>
           <p className="text-emerald-400 text-lg">
-            Start a quiz on Etherlink blockchain and earn XTZ rewards
+            Start a quiz on Core blockchain and earn CORE rewards
           </p>
         </div>
 
@@ -321,11 +321,11 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
         <div className="text-center">
           {isProcessingReward ? (
             <div className="animate-pulse text-yellow-400 text-lg">
-              ⏳ Processing reward on Etherlink...
+              ⏳ Processing reward on Core blockchain...
             </div>
           ) : (
             <div className="text-emerald-400 text-lg">
-              ⚡ Transaction confirmed in 0.4s on Etherlink
+              ⚡ Transaction confirmed in 0.4s on Core
               {selectedAnswer === questions[currentQuestion].correct && (
                 <div className="text-sm text-green-300 mt-1">
                   🎉 +{questions[currentQuestion].reward} XTZ added to wallet
@@ -380,7 +380,7 @@ function Step2PvPDuel({ onNext }: { onNext: () => void }) {
   const { address, chain } = useAccount()
 
   // Smart contract integration
-  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(128123)
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(1114)
   const { writeContract: startDuel, isPending: isStartPending, data: startHash } = useWriteContract()
   const { writeContract: completeDuel, isPending: isCompletePending, data: completeHash } = useWriteContract()
   
@@ -446,7 +446,7 @@ function Step2PvPDuel({ onNext }: { onNext: () => void }) {
       isOracle: true
     },
     {
-      question: "How many confirmations for Etherlink finality?",
+      question: "How many confirmations for Core finality?",
       options: ["1", "6", "12", "20"],
       correct: 0,
       isOracle: false
@@ -579,7 +579,7 @@ function Step2PvPDuel({ onNext }: { onNext: () => void }) {
         <div className="bg-black/40 border border-emerald-500/30 rounded-2xl p-12">
           <div className="animate-spin text-6xl mb-4">⚡</div>
           <div className="text-2xl font-bold text-white mb-2">Finding Opponent...</div>
-          <div className="text-emerald-400 mb-4">Etherlink real-time matching</div>
+          <div className="text-emerald-400 mb-4">Core real-time matching</div>
         </div>
       </div>
     )
@@ -708,7 +708,7 @@ function Step3GuildSystem({ onNext }: { onNext: () => void }) {
     { name: "You", score: 920, avatar: "🏆" }
   ])
   const { address, chain } = useAccount()
-  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(128123)
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(1114)
 
   const handleCreateGuild = async () => {
     try {
@@ -984,7 +984,7 @@ function Step4NFTQuizzes({ onNext }: { onNext: () => void }) {
   const [nftState, setNftState] = useState<'create' | 'mint' | 'earning' | 'completed'>('create')
   const [royaltyEarned] = useState(0.002)
   const { address, chain } = useAccount()
-  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(128123)
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(1114)
 
   const handleCreateQuiz = () => {
     setNftState('mint')
