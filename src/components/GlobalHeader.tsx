@@ -18,7 +18,7 @@ function GlobalHeader({
   const { address, chain } = useAccount();
   
   // Get contract addresses based on current chain
-  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(5001); // Default to Mantle Testnet
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(5003); // Default to Mantle Sepolia Testnet
 
   // Get Token1 balance
   const { data: tokenBalance } = useBalance({

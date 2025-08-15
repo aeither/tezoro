@@ -105,7 +105,7 @@ function ContractDebugPage() {
     useWaitForTransactionReceipt({ hash: mintTokenHash });
 
   // Check if current chain is supported
-  const supportedChainIds = [133717, 11155111, 8453, 12345, 5001]; // From CONTRACT_ADDRESSES
+  const supportedChainIds = [133717, 11155111, 8453, 12345, 5003]; // From CONTRACT_ADDRESSES
   const isCorrectChain = chain ? supportedChainIds.includes(chain.id) : false;
 
   const handleStartQuiz = () => {

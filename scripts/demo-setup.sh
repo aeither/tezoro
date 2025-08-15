@@ -19,7 +19,7 @@ pnpm install
 if [ ! -f .env.local ]; then
     echo "⚠️  No .env.local found. Creating template..."
     cat > .env.local << EOL
-# Mantle Testnet Configuration
+# Mantle Sepolia Testnet Configuration
 VITE_WALLET_CONNECT_PROJECT_ID="your_wallet_connect_project_id"
 VITE_ENVIRONMENT="development"
 
@@ -60,7 +60,7 @@ echo ""
 echo "To start the demo:"
 echo "1. pnpm run dev"
 echo "2. Navigate to http://localhost:5173/demo"
-echo "3. Connect your wallet to Mantle Testnet"
+echo "3. Connect your wallet to Mantle Sepolia Testnet"
 echo "4. Click the 'Auto Play' button for automatic demo"
 echo ""
 echo "Demo Features:"

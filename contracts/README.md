@@ -53,7 +53,7 @@ The deployment script uses CREATE2 to deploy contracts to the same deterministic
 
 ```shell
 # Core Testnet2
-source .env && rm -rf cache out && forge build && forge script --chain 5001 script/QuizGame.s.sol:QuizGameScript --rpc-url https://rpc.testnet.mantle.xyz --broadcast -vvvv --private-key ${PRIVATE_KEY}
+source .env && rm -rf cache out && forge build && forge script --chain 5003 script/QuizGame.s.sol:QuizGameScript --rpc-url https://rpc.testnet.mantle.xyz --broadcast -vvvv --private-key ${PRIVATE_KEY}
 ```
 
 #### Predict Addresses (Without Deploying)
@@ -70,7 +70,7 @@ forge script script/QuizGame.s.sol:QuizGameScript --sig "predictAddresses()" --r
 ```shell
 # Core Testnet2
 forge verify-contract \
-  --chain-id 5001 \
+  --chain-id 5003 \
   --rpc-url https://rpc.testnet.mantle.xyz \
   --verifier blockscout \
   --verifier-url 'https://explorer.testnet.mantle.xyz/api/' \

@@ -8,13 +8,13 @@ import { mantleTestnet } from '../wagmi';
 
 // Currency configuration for different chains
 const CURRENCY_CONFIG = {
-  5001: { // Mantle Testnet
-    symbol: 'BIT',
+  5003: { // Mantle Sepolia Testnet
+    symbol: 'MNT',
     multiplier: 1,
     defaultAmounts: ['0.1', '0.5', '2.5']
   },
   default: { // Fallback configuration
-    symbol: 'BIT',
+    symbol: 'MNT',
     multiplier: 1,
     defaultAmounts: ['0.1', '0.5', '2.5']
   }
@@ -112,7 +112,7 @@ function QuizGameContract() {
 
 
   // Check if user is on correct chain
-  const supportedChainIds = [5001]; // Only Mantle Testnet
+  const supportedChainIds = [5003]; // Only Mantle Sepolia Testnet
   const isCorrectChain = chain ? supportedChainIds.includes(chain.id) : false;
 
   // If not on correct chain, show network switch options
@@ -126,7 +126,7 @@ function QuizGameContract() {
       }}>
         <h2 style={{ color: "#ffffff", marginBottom: "1rem" }}>Wrong Network</h2>
         <p style={{ color: "#9ca3af", marginBottom: "2rem" }}>
-          Please switch to Mantle Testnet to play the quiz game.
+          Please switch to Mantle Sepolia Testnet to play the quiz game.
         </p>
         <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "2rem" }}>
           <button 
@@ -143,7 +143,7 @@ function QuizGameContract() {
               transition: "all 0.3s ease"
             }}
           >
-            Switch to Mantle Testnet
+            Switch to Mantle Sepolia Testnet
           </button>
         </div>
         <button 

@@ -54,7 +54,7 @@ Tezoro combines **interactive quizzes**, **gamified quests**, and **blockchain r
 ```
 Frontend: React + TypeScript + Vite
 Database: PostgreSQL + Drizzle ORM
-Web3: Wagmi + Viem + Mantle Testnet
+Web3: Wagmi + Viem + Mantle Sepolia Testnet
 UI: Tailwind CSS + Custom Design System
 Deployment: Vercel + Railway
 Smart Contracts: Solidity 0.8.30 + Foundry
@@ -88,7 +88,7 @@ duel_results (duel_id, user_id, score, time_spent, rewards_earned)
 ## 🔗 Smart Contracts
 
 ### Contract Architecture
-All smart contracts are deployed on **Mantle Testnet** (Chain ID: 5001) for fast, low-cost transactions.
+All smart contracts are deployed on **Mantle Sepolia Testnet** (Chain ID: 5003) for fast, low-cost transactions.
 
 #### **Token1.sol** - Reward Token
 ```solidity
@@ -317,7 +317,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981 {
 
 ### Demo Access
 - **Live Demo**: Navigate to `/demo` route for interactive 4-step demo
-- **Smart Contracts**: All contracts deployed on Mantle Testnet (Chain ID: 5001)
+- **Smart Contracts**: All contracts deployed on Mantle Sepolia Testnet (Chain ID: 5003)
 - **Contract Addresses**: See `src/libs/constants.ts` for deployed addresses
 
 ### For Developers
@@ -338,7 +338,7 @@ pnpm dev
 cd contracts
 forge build
 forge test
-forge script script/DeployDemoContracts.s.sol --rpc-url https://rpc.testnet.mantle.xyz --broadcast
+forge script script/DeployDemoContracts.s.sol --rpc-url https://rpc.sepolia.mantle.xyz --broadcast
 ```
 
 ### For Users

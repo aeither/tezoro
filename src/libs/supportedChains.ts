@@ -10,13 +10,13 @@ export const SUPPORTED_CHAIN_IDS = SUPPORTED_CHAINS.map(chain => chain.id);
 
 // Currency configuration for different chains
 export const CURRENCY_CONFIG = {
-  5001: { // Mantle Testnet
-    symbol: 'BIT',
+  5003: { // Mantle Sepolia Testnet
+    symbol: 'MNT',
     multiplier: 1,
     defaultAmounts: ['0.1', '0.5', '2.5']
   },
   default: { // Fallback configuration
-    symbol: 'BIT',
+    symbol: 'MNT',
     multiplier: 1,
     defaultAmounts: ['0.001', '0.005', '2.5']
   }

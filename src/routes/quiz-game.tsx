@@ -177,7 +177,7 @@ function QuizGame() {
         }}>
           <h2 style={{ color: "#ffffff", marginBottom: "1rem" }}>Wrong Network</h2>
           <p style={{ color: "#9ca3af", marginBottom: "2rem" }}>
-            Please switch to Mantle Testnet to play this quiz.
+            Please switch to Mantle Sepolia Testnet to play this quiz.
           </p>
           <button 
             onClick={() => switchChain({ chainId: mantleTestnet.id })}
@@ -192,7 +192,7 @@ function QuizGame() {
               cursor: "pointer"
             }}
           >
-            Switch to Mantle Testnet
+            Switch to Mantle Sepolia Testnet
           </button>
         </div>
       </div>

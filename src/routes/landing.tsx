@@ -79,7 +79,7 @@ function LandingPage() {
       <div className="quiz-card rounded-3xl p-12 text-center animate-bounce-in" style={{ animationDelay: '1000ms' }}>
         <h2 className="text-4xl font-bold text-primary mb-8">How It Works</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-          <StepCard step="1" title="Connect" description="Connect your wallet to Mantle Testnet" />
+          <StepCard step="1" title="Connect" description="Connect your wallet to Mantle Sepolia Testnet" />
           <StepCard step="2" title="Choose" description="Select from Web3, DeFi, or Tezos quizzes" />
           <StepCard step="3" title="Play" description="Answer questions and earn tokens" />
           <StepCard step="4" title="Claim" description="Get up to 190% returns for perfect scores!" />

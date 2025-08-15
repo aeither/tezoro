@@ -1,26 +1,26 @@
 import { defineChain } from 'viem'
 
-// Mantle Testnet configuration
+// Mantle Sepolia Testnet configuration
 export const mantleTestnet = defineChain({
-  id: 5001,
-  name: 'Mantle Testnet',
+  id: 5003,
+  name: 'Mantle Sepolia Testnet',
   nativeCurrency: {
     decimals: 18,
-    name: 'Bit',
-    symbol: 'BIT',
+    name: 'Mantle',
+    symbol: 'MNT',
   },
   rpcUrls: {
     default: {
-      http: ['https://rpc.testnet.mantle.xyz'],
+      http: ['https://rpc.sepolia.mantle.xyz'],
     },
     public: {
-      http: ['https://rpc.testnet.mantle.xyz'],
+      http: ['https://rpc.sepolia.mantle.xyz'],
     },
   },
   blockExplorers: {
     default: {
-      name: 'Mantle Testnet Explorer',
-      url: 'https://explorer.testnet.mantle.xyz',
+      name: 'Mantle Sepolia Explorer',
+      url: 'https://explorer.sepolia.mantle.xyz',
     },
   },
   testnet: true,

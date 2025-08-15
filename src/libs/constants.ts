@@ -1,9 +1,9 @@
 // Contract addresses by chain ID
 const CONTRACT_ADDRESSES = {
-  // Mantle Testnet
-  5001: {
-    token1ContractAddress: "0xdED87fD6213A8f4ea824B8c74128fAf3DE65BFFE",
-    quizGameContractAddress: "0x9a486C66c308db15aD6a3d1aF4cb20244bD1e2c3",
+  // Mantle Sepolia Testnet
+  5003: {
+    token1ContractAddress: "0xc0Fa47fAD733524291617F341257A97b79488ecE",
+    quizGameContractAddress: "0xdED87fD6213A8f4ea824B8c74128fAf3DE65BFFE",
     // New demo contracts (placeholder addresses - update after deployment)
     quizDuelContractAddress: "0x0000000000000000000000000000000000000001",
     guildSystemContractAddress: "0x0000000000000000000000000000000000000002",
@@ -19,9 +19,9 @@ export function getContractAddresses(chainId: number) {
   };
 }
 
-// Legacy exports for backward compatibility (defaults to Mantle Testnet)
-export const token1ContractAddress = CONTRACT_ADDRESSES[5001].token1ContractAddress;
-export const quizGameContractAddress = CONTRACT_ADDRESSES[5001].quizGameContractAddress;
+// Legacy exports for backward compatibility (defaults to Mantle Sepolia Testnet)
+export const token1ContractAddress = CONTRACT_ADDRESSES[5003].token1ContractAddress;
+export const quizGameContractAddress = CONTRACT_ADDRESSES[5003].quizGameContractAddress;
 
 // Demo configuration
 export const DEMO_CONFIG = {
