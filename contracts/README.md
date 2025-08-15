@@ -53,7 +53,7 @@ The deployment script uses CREATE2 to deploy contracts to the same deterministic
 
 ```shell
 # Core Testnet2
-source .env && rm -rf cache out && forge build && forge script --chain 1114 script/QuizGame.s.sol:QuizGameScript --rpc-url https://rpc.test2.btcs.network --broadcast -vvvv --private-key ${PRIVATE_KEY}
+source .env && rm -rf cache out && forge build && forge script --chain 5001 script/QuizGame.s.sol:QuizGameScript --rpc-url https://rpc.testnet.mantle.xyz --broadcast -vvvv --private-key ${PRIVATE_KEY}
 ```
 
 #### Predict Addresses (Without Deploying)
@@ -62,7 +62,7 @@ You can predict the contract addresses before deployment:
 
 ```shell
 # Predict addresses for Core Testnet2
-forge script script/QuizGame.s.sol:QuizGameScript --sig "predictAddresses()" --rpc-url https://rpc.test2.btcs.network
+forge script script/QuizGame.s.sol:QuizGameScript --sig "predictAddresses()" --rpc-url https://rpc.testnet.mantle.xyz
 ```
 
 ### Verify
@@ -70,10 +70,10 @@ forge script script/QuizGame.s.sol:QuizGameScript --sig "predictAddresses()" --r
 ```shell
 # Core Testnet2
 forge verify-contract \
-  --chain-id 1114 \
-  --rpc-url https://rpc.test2.btcs.network \
+  --chain-id 5001 \
+  --rpc-url https://rpc.testnet.mantle.xyz \
   --verifier blockscout \
-  --verifier-url 'https://scan.test2.btcs.network/api/' \
+  --verifier-url 'https://explorer.testnet.mantle.xyz/api/' \
   <CONTRACT_ADDRESS> \
   src/QuizGame.sol:QuizGame
 ```

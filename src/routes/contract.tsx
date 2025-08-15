@@ -13,7 +13,7 @@ import {
 import { formatEther, parseEther } from 'viem'
 import { quizGameABI } from '../libs/quizGameABI'
 import { getContractAddresses } from '../libs/constants'
-import { coreTestnet } from '../wagmi'
+import { mantleTestnet } from '../wagmi'
 import Header from '../components/Header'
 
 function ContractDebugPage() {
@@ -27,12 +27,12 @@ function ContractDebugPage() {
   const [submittedAnswer, setSubmittedAnswer] = useState<number>(42);
 
   // Get contract addresses based on current chain
-  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(coreTestnet.id);
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(mantleTestnet.id);
 
   // Get user balance
   const { data: balance } = useBalance({
     address,
-    chainId: chain?.id || coreTestnet.id,
+    chainId: chain?.id || mantleTestnet.id,
   });
 
   // Read contract data
@@ -105,7 +105,7 @@ function ContractDebugPage() {
     useWaitForTransactionReceipt({ hash: mintTokenHash });
 
   // Check if current chain is supported
-  const supportedChainIds = [133717, 11155111, 8453, 12345, 1114]; // From CONTRACT_ADDRESSES
+  const supportedChainIds = [133717, 11155111, 8453, 12345, 5001]; // From CONTRACT_ADDRESSES
   const isCorrectChain = chain ? supportedChainIds.includes(chain.id) : false;
 
   const handleStartQuiz = () => {

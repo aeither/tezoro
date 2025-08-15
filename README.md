@@ -18,7 +18,7 @@ We're building a fun, game-like learning app where you earn rewards for answerin
 
 **The Future of Decentralized Learning & Earning**
 
-Tezoro transforms education into a gamified experience where knowledge acquisition directly translates to real rewards. Built for the Core blockchain ecosystem, we're bridging the gap between traditional learning and Web3 incentives.
+Tezoro transforms education into a gamified experience where knowledge acquisition directly translates to real rewards. Built for the Mantle blockchain ecosystem, we're bridging the gap between traditional learning and Web3 incentives.
 
 ## 🎯 The Problem
 
@@ -54,7 +54,7 @@ Tezoro combines **interactive quizzes**, **gamified quests**, and **blockchain r
 ```
 Frontend: React + TypeScript + Vite
 Database: PostgreSQL + Drizzle ORM
-Web3: Wagmi + Viem + Core Testnet
+Web3: Wagmi + Viem + Mantle Testnet
 UI: Tailwind CSS + Custom Design System
 Deployment: Vercel + Railway
 Smart Contracts: Solidity 0.8.30 + Foundry
@@ -88,7 +88,7 @@ duel_results (duel_id, user_id, score, time_spent, rewards_earned)
 ## 🔗 Smart Contracts
 
 ### Contract Architecture
-All smart contracts are deployed on **Core Testnet2** (Chain ID: 1114) for fast, low-cost transactions.
+All smart contracts are deployed on **Mantle Testnet** (Chain ID: 5001) for fast, low-cost transactions.
 
 #### **Token1.sol** - Reward Token
 ```solidity
@@ -299,7 +299,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981 {
 ## 🏆 Competitive Advantage
 
 ### Why Tezoro Wins
-1. **First-Mover Advantage**: First learn-to-earn platform on Core blockchain
+1. **First-Mover Advantage**: First learn-to-earn platform on Mantle blockchain
 2. **Social Integration**: Native Farcaster integration drives viral growth
 3. **Token Economics**: Sustainable reward model with real utility
 4. **Community-Driven**: User-generated content and governance
@@ -317,7 +317,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981 {
 
 ### Demo Access
 - **Live Demo**: Navigate to `/demo` route for interactive 4-step demo
-- **Smart Contracts**: All contracts deployed on Core Testnet2 (Chain ID: 1114)
+- **Smart Contracts**: All contracts deployed on Mantle Testnet (Chain ID: 5001)
 - **Contract Addresses**: See `src/libs/constants.ts` for deployed addresses
 
 ### For Developers
@@ -338,7 +338,7 @@ pnpm dev
 cd contracts
 forge build
 forge test
-forge script script/DeployDemoContracts.s.sol --rpc-url https://rpc.test2.btcs.network --broadcast
+forge script script/DeployDemoContracts.s.sol --rpc-url https://rpc.testnet.mantle.xyz --broadcast
 ```
 
 ### For Users
@@ -346,7 +346,7 @@ forge script script/DeployDemoContracts.s.sol --rpc-url https://rpc.test2.btcs.n
 2. **Sign in with Farcaster**: Authenticate your social identity
 3. **Start Learning**: Take daily quizzes and complete quests
 4. **Earn Rewards**: Accumulate points and compete on leaderboards
-5. **Convert to CORE**: Exchange points for Core tokens
+5. **Convert to MNT**: Exchange points for Mantle tokens
 
 ### Demo Flow (Available Now)
 1. **Solo Quiz**: Start quiz → Answer questions → Claim rewards

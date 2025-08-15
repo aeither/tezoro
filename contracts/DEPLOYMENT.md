@@ -1,47 +1,47 @@
 
 ## 🚀 Deployment Commands
 
-### Core Testnet2 - Chain ID: 1114
+### Mantle Testnet - Chain ID: 5001
 ```bash
-source .env && rm -rf cache out && forge build && forge script --chain 1114 script/QuizGame.s.sol:QuizGameScript --rpc-url https://rpc.test2.btcs.network --broadcast -vvvv --private-key ${PRIVATE_KEY}
+source .env && rm -rf cache out && forge build && forge script --chain 5001 script/QuizGame.s.sol:QuizGameScript --rpc-url https://rpc.testnet.mantle.xyz --broadcast -vvvv --private-key ${PRIVATE_KEY}
 ```
 
-## 🌐 Core Testnet2 Network Details
+## 🌐 Mantle Testnet Network Details
 
 | Parameter | Value |
 |-----------|-------|
-| **Network Name** | Core Testnet2 |
-| **Chain ID** | 1114 (0x45a) |
-| **RPC Endpoint** | https://rpc.test2.btcs.network |
-| **Archive Node RPC** | https://rpcar.test2.btcs.network |
-| **WebSocket Endpoint** | wss://rpc.test2.btcs.network/wsp |
-| **Currency Symbol** | tCORE |
-| **Block Explorer URL** | https://scan.test2.btcs.network/ |
-| **Faucet** | Available through Core DAO testnet faucet |
+| **Network Name** | Mantle Testnet |
+| **Chain ID** | 5001 (0x1389) |
+| **RPC Endpoint** | https://rpc.testnet.mantle.xyz |
+| **Archive Node RPC** | https://rpc.testnet.mantle.xyz |
+| **WebSocket Endpoint** | wss://ws.testnet.mantle.xyz |
+| **Currency Symbol** | BIT |
+| **Block Explorer URL** | https://explorer.testnet.mantle.xyz/ |
+| **Faucet** | Available through Mantle testnet faucet |
 
-**Note**: This is the latest and officially supported testnet for the Core blockchain. The previous testnet (chain ID 1115) is now deprecated and no longer maintained.
+**Note**: This is the official testnet for the Mantle blockchain, providing a stable environment for development and testing.
 
 ## 📋 Contract Verification
 
-### Core Testnet2 Verification
+### Mantle Testnet Verification
 
-After deployment, verify your contracts on the Core Testnet2 block explorer:
+After deployment, verify your contracts on the Mantle Testnet block explorer:
 
 ```bash
-# Verify QuizGame contract on Core Testnet2
+# Verify QuizGame contract on Mantle Testnet
 forge verify-contract \
---chain-id 1114 \
---rpc-url https://rpc.test2.btcs.network \
---verifier-url 'https://scan.test2.btcs.network/api/' \
+--chain-id 5001 \
+--rpc-url https://rpc.testnet.mantle.xyz \
+--verifier-url 'https://explorer.testnet.mantle.xyz/api/' \
 --verifier blockscout \
 <CONTRACT_ADDRESS> \
 src/QuizGame.sol:QuizGame
 
-# Verify Token1 contract on Core Testnet2
+# Verify Token1 contract on Mantle Testnet
 forge verify-contract \
---chain-id 1114 \
---rpc-url https://rpc.test2.btcs.network \
---verifier-url 'https://scan.test2.btcs.network/api/' \
+--chain-id 5001 \
+--rpc-url https://rpc.testnet.mantle.xyz \
+--verifier-url 'https://explorer.testnet.mantle.xyz/api/' \
 --verifier blockscout \
 <TOKEN_CONTRACT_ADDRESS> \
 src/QuizGame.sol:Token1
@@ -49,9 +49,9 @@ src/QuizGame.sol:Token1
 
 ## 🔗 Useful Resources
 
-### Core Blockchain Resources
-- **Core DAO Documentation**: https://docs.coredao.org/
-- **Core Testnet2 Block Explorer**: https://scan.test2.btcs.network/
-- **Core DAO Testnet Faucet**: https://scan.test2.btcs.network/faucet
-- **Core DAO Official Website**: https://coredao.org/
-- **Core DAO GitHub**: https://github.com/coredao-org
+### Mantle Blockchain Resources
+- **Mantle Documentation**: https://docs.mantle.xyz/
+- **Mantle Testnet Block Explorer**: https://explorer.testnet.mantle.xyz/
+- **Mantle Testnet Faucet**: https://faucet.testnet.mantle.xyz
+- **Mantle Official Website**: https://www.mantle.xyz/
+- **Mantle GitHub**: https://github.com/mantlenetworkio

@@ -1,19 +1,19 @@
 # 🚀 Smart Contract Deployment Guide
 
-## Quick Deploy to Core Testnet2
+## Quick Deploy to Mantle Testnet
 
 ### 1. Setup Environment
 ```bash
 # Create .env file in contracts/ directory
 echo "PRIVATE_KEY=your_private_key_here" > .env
-echo "CORE_TESTNET2_RPC_URL=https://rpc.test2.btcs.network" >> .env
+echo "MANTLE_TESTNET_RPC_URL=https://rpc.testnet.mantle.xyz" >> .env
 ```
 
 ### 2. Deploy All Demo Contracts
 ```bash
 cd contracts
 forge script script/DeployDemoContracts.s.sol \
-  --rpc-url $CORE_TESTNET2_RPC_URL \
+  --rpc-url $MANTLE_TESTNET_RPC_URL \
   --private-key $PRIVATE_KEY \
   --broadcast \
   --verify
@@ -25,8 +25,8 @@ After deployment, update `src/libs/constants.ts` with the new addresses:
 
 ```typescript
 const CONTRACT_ADDRESSES = {
-  // Core Testnet2
-  1114: {
+  // Mantle Testnet
+  5001: {
     token1ContractAddress: "0x...", // From deployment output
     quizGameContractAddress: "0x...", // From deployment output
     quizDuelContractAddress: "0x...", // From deployment output
@@ -50,14 +50,14 @@ If you prefer to deploy contracts individually:
 ### Deploy Token Contract
 ```bash
 forge create src/Token1.sol:Token1 \
-  --rpc-url $CORE_TESTNET2_RPC_URL \
+  --rpc-url $MANTLE_TESTNET_RPC_URL \
   --private-key $PRIVATE_KEY
 ```
 
 ### Deploy Quiz Game Contract
 ```bash
 forge create src/QuizGame.sol:QuizGame \
-  --rpc-url $CORE_TESTNET2_RPC_URL \
+  --rpc-url $MANTLE_TESTNET_RPC_URL \
   --private-key $PRIVATE_KEY \
   --constructor-args <TOKEN_ADDRESS>
 ```
@@ -65,7 +65,7 @@ forge create src/QuizGame.sol:QuizGame \
 ### Deploy Quiz Duel Contract
 ```bash
 forge create src/QuizDuel.sol:QuizDuel \
-  --rpc-url $CORE_TESTNET2_RPC_URL \
+  --rpc-url $MANTLE_TESTNET_RPC_URL \
   --private-key $PRIVATE_KEY \
   --constructor-args <TOKEN_ADDRESS>
 ```
@@ -73,7 +73,7 @@ forge create src/QuizDuel.sol:QuizDuel \
 ### Deploy Guild System Contract
 ```bash
 forge create src/GuildSystem.sol:GuildSystem \
-  --rpc-url $CORE_TESTNET2_RPC_URL \
+  --rpc-url $MANTLE_TESTNET_RPC_URL \
   --private-key $PRIVATE_KEY \
   --constructor-args <TOKEN_ADDRESS>
 ```
@@ -81,18 +81,18 @@ forge create src/GuildSystem.sol:GuildSystem \
 ### Deploy Quiz NFT Contract
 ```bash
 forge create src/QuizNFT.sol:QuizNFT \
-  --rpc-url $CORE_TESTNET2_RPC_URL \
+  --rpc-url $MANTLE_TESTNET_RPC_URL \
   --private-key $PRIVATE_KEY \
   --constructor-args <TOKEN_ADDRESS>
 ```
 
-## Core Testnet2 Info
+## Mantle Testnet Info
 
-- **Chain ID**: 1114 (0x45a)
-- **RPC URL**: https://rpc.test2.btcs.network
+- **Chain ID**: 5001 (0x45a)
+- **RPC URL**: https://rpc.testnet.mantle.xyz
 - **Archive RPC**: https://rpcar.test2.btcs.network
 - **WebSocket**: wss://rpc.test2.btcs.network/wsp
-- **Explorer**: https://scan.test2.btcs.network/
+- **Explorer**: https://explorer.testnet.mantle.xyz/
 - **Faucet**: Available on the explorer
 
 ## Verification
@@ -100,10 +100,10 @@ forge create src/QuizNFT.sol:QuizNFT \
 After deployment, verify contracts on the explorer:
 ```bash
 forge verify-contract <CONTRACT_ADDRESS> src/QuizGame.sol:QuizGame \
-  --chain-id 1114 \
-  --rpc-url https://rpc.test2.btcs.network \
+  --chain-id 5001 \
+  --rpc-url https://rpc.testnet.mantle.xyz \
   --verifier blockscout \
-  --verifier-url 'https://scan.test2.btcs.network/api/' \
+  --verifier-url 'https://explorer.testnet.mantle.xyz/api/' \
   --constructor-args $(cast abi-encode "constructor(address)" <TOKEN_ADDRESS>)
 ```
 

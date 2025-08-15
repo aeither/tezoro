@@ -1,6 +1,6 @@
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { SUPPORTED_CHAINS } from './libs/supportedChains';
-import { coreTestnet } from './libs/coreChain';
+import { mantleTestnet } from './libs/mantleChain';
 
 const config = getDefaultConfig({
   appName: 'Tezoro',
@@ -9,7 +9,7 @@ const config = getDefaultConfig({
   ssr: true,
 });
 
-export { config, coreTestnet };
+export { config, mantleTestnet };
 
 declare module "wagmi" {
   interface Register {

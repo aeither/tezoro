@@ -120,7 +120,7 @@ function Step1SoloQuiz({ onNext }: { onNext: () => void }) {
   const { address, chain } = useAccount()
 
   // Smart contract integration
-  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(1114)
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(5001)
   const { writeContract: startQuiz, isPending: isStartPending, data: startHash } = useWriteContract()
   const { writeContract: completeQuiz, isPending: isCompletePending, data: completeHash } = useWriteContract()
   
@@ -380,7 +380,7 @@ function Step2PvPDuel({ onNext }: { onNext: () => void }) {
   const { address, chain } = useAccount()
 
   // Smart contract integration
-  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(1114)
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(5001)
   const { writeContract: startDuel, isPending: isStartPending, data: startHash } = useWriteContract()
   const { writeContract: completeDuel, isPending: isCompletePending, data: completeHash } = useWriteContract()
   
@@ -708,7 +708,7 @@ function Step3GuildSystem({ onNext }: { onNext: () => void }) {
     { name: "You", score: 920, avatar: "🏆" }
   ])
   const { address, chain } = useAccount()
-  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(1114)
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(5001)
 
   const handleCreateGuild = async () => {
     try {
@@ -984,7 +984,7 @@ function Step4NFTQuizzes({ onNext }: { onNext: () => void }) {
   const [nftState, setNftState] = useState<'create' | 'mint' | 'earning' | 'completed'>('create')
   const [royaltyEarned] = useState(0.002)
   const { address, chain } = useAccount()
-  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(1114)
+  const contractAddresses = chain ? getContractAddresses(chain.id) : getContractAddresses(5001)
 
   const handleCreateQuiz = () => {
     setNftState('mint')
