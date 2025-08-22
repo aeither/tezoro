@@ -20,25 +20,55 @@ const CURRENCY_CONFIG = {
   }
 } as const;
 
-// Available quiz configurations
+// Available quiz configurations - Mantle-focused learning tracks
 const QUIZ_CONFIGS = {
-  'web3-basics': {
-    id: 'web3-basics',
-    title: 'Web3 Basics',
-    description: 'Test your knowledge of blockchain fundamentals',
-    questions: 5
+  'mantle-basics': {
+    id: 'mantle-basics',
+    title: 'Mantle Architecture Fundamentals',
+    description: 'Understanding Mantle\'s Layer 2 scaling solution and core architecture',
+    questions: 5,
+    difficulty: 'Beginner',
+    category: 'Architecture'
   },
-  'defi-fundamentals': {
-    id: 'defi-fundamentals', 
-    title: 'DeFi Fundamentals',
-    description: 'Learn about decentralized finance protocols',
-    questions: 5
+  'defi-mantle': {
+    id: 'defi-mantle', 
+    title: 'DeFi Building on Mantle',
+    description: 'Explore DeFi protocols and opportunities on the Mantle network',
+    questions: 5,
+    difficulty: 'Intermediate',
+    category: 'DeFi'
   },
-  'mantle': {
-    id: 'mantle',
-    title: 'Mantle Ecosystem',
-    description: 'Learn about the Mantle blockchain ecosystem',
-    questions: 5
+  'scaling-solutions': {
+    id: 'scaling-solutions',
+    title: 'L2 Scaling with Mantle',
+    description: 'Deep dive into Layer 2 scaling technologies and Mantle\'s approach',
+    questions: 5,
+    difficulty: 'Advanced',
+    category: 'Scaling'
+  },
+  'dev-tools': {
+    id: 'dev-tools',
+    title: 'Mantle Developer Ecosystem',
+    description: 'Master the tools and infrastructure for building on Mantle',
+    questions: 5,
+    difficulty: 'Intermediate',
+    category: 'Development'
+  },
+  'yield-farming': {
+    id: 'yield-farming',
+    title: 'Yield Farming on Mantle',
+    description: 'Learn yield farming strategies and risk assessment on Mantle DeFi',
+    questions: 5,
+    difficulty: 'Advanced',
+    category: 'DeFi'
+  },
+  'validator-operations': {
+    id: 'validator-operations',
+    title: 'Mantle Validator & Node Operations',
+    description: 'Expert-level knowledge on running Mantle network infrastructure',
+    questions: 5,
+    difficulty: 'Expert',
+    category: 'Infrastructure'
   }
 } as const;
 
@@ -255,7 +285,7 @@ function QuizGameContract() {
         fontSize: "2.5rem",
         fontWeight: "bold"
       }}>
-        🏛️ Tezoro Quiz Game
+        🌐 Mantle Learning Hub
       </h1>
 
       {/* Game Rules */}
@@ -266,18 +296,18 @@ function QuizGameContract() {
         marginBottom: "2rem",
         border: "1px solid rgba(0, 255, 135, 0.2)"
       }}>
-        <h3 style={{ color: "#00ff87", marginBottom: "1rem" }}>📋 How It Works:</h3>
+        <h3 style={{ color: "#00ff87", marginBottom: "1rem" }}>🎓 Mantle Learning System:</h3>
         <ul style={{ 
           color: "#ffffff", 
           lineHeight: "1.6",
           paddingLeft: "1.5rem",
           margin: 0
         }}>
-          <li>🎯 Choose a quiz topic below</li>
-          <li>📝 Answer all questions in the quiz</li>
-          <li>✅ Get all answers correct for bonus tokens (10-90%)</li>
-          <li>🪙 Receive Token1 tokens equal to your entry fee × 100</li>
-          <li>⏰ Complete within 1 hour of starting</li>
+          <li>🌟 Choose your learning path: Beginner to Expert</li>
+          <li>📚 Master Mantle architecture, DeFi, and development</li>
+          <li>🏆 Earn progressive badges and achievements</li>
+          <li>💰 Get MNT rewards based on quiz performance</li>
+          <li>🚀 Unlock ecosystem quests and partner rewards</li>
         </ul>
       </div>
 
@@ -290,7 +320,7 @@ function QuizGameContract() {
         border: "1px solid rgba(0, 255, 135, 0.2)"
       }}>
         <h3 style={{ color: "#00ff87", marginBottom: "1.5rem", textAlign: "center" }}>
-          🎮 Select a Quiz
+          📖 Choose Your Learning Path
         </h3>
         
         <div style={{ 
@@ -321,7 +351,34 @@ function QuizGameContract() {
                 e.currentTarget.style.borderColor = "rgba(0, 255, 135, 0.3)";
               }}
             >
-              <h4 style={{ color: "#00ff87", marginBottom: "0.5rem" }}>{quiz.title}</h4>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.5rem" }}>
+                <h4 style={{ color: "#00ff87", margin: 0, flex: 1 }}>{quiz.title}</h4>
+                <span style={{ 
+                  backgroundColor: quiz.difficulty === 'Beginner' ? '#10B981' : 
+                                 quiz.difficulty === 'Intermediate' ? '#F59E0B' :
+                                 quiz.difficulty === 'Advanced' ? '#EF4444' : '#8B5CF6',
+                  color: 'white',
+                  padding: '0.2rem 0.5rem',
+                  borderRadius: '4px',
+                  fontSize: '0.7rem',
+                  fontWeight: 'bold',
+                  marginLeft: '0.5rem'
+                }}>
+                  {quiz.difficulty}
+                </span>
+              </div>
+              <div style={{ marginBottom: "0.5rem" }}>
+                <span style={{ 
+                  backgroundColor: "rgba(0, 255, 135, 0.2)",
+                  color: "#00ff87",
+                  padding: '0.2rem 0.5rem',
+                  borderRadius: '4px',
+                  fontSize: '0.7rem',
+                  fontWeight: 'bold'
+                }}>
+                  {quiz.category}
+                </span>
+              </div>
               <p style={{ color: "#ffffff", fontSize: "0.9rem", margin: "0 0 0.5rem 0" }}>
                 {quiz.description}
               </p>

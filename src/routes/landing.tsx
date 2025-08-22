@@ -11,8 +11,8 @@ function LandingPage() {
             Welcome to Tezoro
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            Master blockchain knowledge through gamified quizzes and earn real rewards on Mantle blockchain.
-            Challenge yourself, climb leaderboards, and get rewarded for learning!
+            Master Mantle blockchain knowledge through comprehensive learning paths and earn real rewards.
+            From DeFi fundamentals to validator operations - become a Mantle ecosystem expert!
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link
@@ -51,26 +51,26 @@ function LandingPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
         <FeatureCard
           icon="🎮"
-          title="Onchain Quiz Game"
-          description="Play blockchain quizzes with real crypto rewards. Pay to play, earn up to 190% back based on performance!"
+          title="Mantle Learning Paths"
+          description="Progressive curriculum from Mantle basics to expert validator operations. Real crypto rewards for every milestone!"
           delay="200ms"
         />
         <FeatureCard
-          icon="🧠"
-          title="Learn & Earn"
-          description="Master Web3, DeFi, and Tezos concepts through interactive quizzes with instant feedback."
+          icon="🏗️"
+          title="DeFi & Development"
+          description="Master DeFi protocols, yield farming strategies, and dApp development on Mantle's L2 architecture."
           delay="400ms"
         />
         <FeatureCard
-          icon="🏆"
-          title="Leaderboards"
-          description="Compete with other learners globally and climb seasonal rankings for extra rewards."
+          icon="🌐"
+          title="Ecosystem Quests"
+          description="Partner-sponsored quests exploring DEX protocols, bridge mechanisms, and governance participation."
           delay="600ms"
         />
         <FeatureCard
-          icon="🪙"
-          title="Token Rewards"
-          description="Earn TK1 tokens for completing quizzes, with bonus multipliers for perfect scores!"
+          icon="🏅"
+          title="Achievement System"
+          description="Earn exclusive badges and NFTs. From Mantle Newcomer to Ecosystem Champion - show your expertise!"
           delay="800ms"
         />
       </div>
@@ -80,17 +80,17 @@ function LandingPage() {
         <h2 className="text-4xl font-bold text-primary mb-8">How It Works</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
           <StepCard step="1" title="Connect" description="Connect your wallet to Mantle Sepolia Testnet" />
-          <StepCard step="2" title="Choose" description="Select from Web3, DeFi, or Tezos quizzes" />
-          <StepCard step="3" title="Play" description="Answer questions and earn tokens" />
-          <StepCard step="4" title="Claim" description="Get up to 190% returns for perfect scores!" />
+          <StepCard step="2" title="Learn" description="Choose from Mantle architecture, DeFi, or validator quizzes" />
+          <StepCard step="3" title="Progress" description="Complete learning paths and ecosystem quests" />
+          <StepCard step="4" title="Earn" description="Collect badges, NFTs, and MNT rewards for expertise!" />
         </div>
       </div>
 
       {/* Final CTA */}
       <div className="text-center py-16 animate-bounce-in" style={{ animationDelay: '1200ms' }}>
-        <h3 className="text-3xl font-bold text-foreground mb-6">Ready to Test Your Knowledge?</h3>
+        <h3 className="text-3xl font-bold text-foreground mb-6">Ready to Master Mantle?</h3>
         <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-          Join the Tezoro community and start earning rewards for learning blockchain concepts!
+          Join the Tezoro community and become a certified Mantle ecosystem expert while earning real rewards!
         </p>
         <Link
           to="/contract"

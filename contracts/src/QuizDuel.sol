@@ -50,7 +50,7 @@ contract QuizDuel is Ownable {
         token = Token1(tokenAddress);
         
         // Mock oracle data for demo
-        oracleAnswers["CORE_PRICE"] = 1; // Index 1 = $1.23
+        oracleAnswers["MNT_PRICE"] = 1; // Index 1 = $1.23
         oracleAnswers["ETH_PRICE"] = 2; // Index 2 = $2,450
     }
     

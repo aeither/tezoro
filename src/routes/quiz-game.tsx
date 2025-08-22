@@ -12,26 +12,196 @@ interface QuizSearchParams {
   quiz?: string
 }
 
-// Quiz configurations
+// Quiz configurations - Mantle-focused learning content
 const QUIZ_CONFIGS = {
-  'web3-basics': {
-    id: 'web3-basics',
-    title: 'Web3 Basics',
-    description: 'Test your knowledge of blockchain fundamentals',
+  'mantle-basics': {
+    id: 'mantle-basics',
+    title: 'Mantle Architecture Fundamentals',
+    description: 'Understanding Mantle\'s Layer 2 scaling solution and core architecture',
     questions: [
       {
-        question: "What is the primary purpose of a blockchain?",
-        options: ["To store data", "To create a decentralized, immutable ledger", "To process payments", "To host websites"],
+        question: "What type of Layer 2 solution is Mantle Network?",
+        options: ["Optimistic Rollup", "ZK-Rollup", "Hybrid Rollup with modular architecture", "Sidechain"],
+        correct: 2
+      },
+      {
+        question: "What is the native token of Mantle Network?",
+        options: ["ETH", "MNT", "MNTL", "MANTLE"],
         correct: 1
       },
       {
-        question: "What does 'HODL' mean in cryptocurrency?",
-        options: ["Hold On for Dear Life", "Hold", "High Order Data Logic", "Hash of Digital Ledger"],
+        question: "Which consensus mechanism does Mantle use for transaction ordering?",
+        options: ["Proof of Work", "Proof of Stake", "Sequencer-based ordering", "Delegated Proof of Stake"],
+        correct: 2
+      },
+      {
+        question: "What is Mantle's key advantage over other Layer 2 solutions?",
+        options: ["Faster finality", "Modular architecture with separate execution and settlement", "Lower gas fees", "All of the above"],
+        correct: 3
+      },
+      {
+        question: "Which Ethereum network does Mantle settle on?",
+        options: ["Ethereum Mainnet", "Ethereum Sepolia", "Polygon", "BSC"],
+        correct: 0
+      }
+    ]
+  },
+  'defi-mantle': {
+    id: 'defi-mantle',
+    title: 'DeFi Building on Mantle',
+    description: 'Explore DeFi protocols and opportunities on the Mantle network',
+    questions: [
+      {
+        question: "What are the main benefits of building DeFi protocols on Mantle?",
+        options: ["High throughput only", "Low gas costs and fast finality", "Better security", "Smart contract compatibility"],
         correct: 1
       },
       {
-        question: "What is a smart contract?",
-        options: ["A legal document", "Self-executing code on blockchain", "A cryptocurrency", "A wallet"],
+        question: "Which DeFi primitive is most suitable for Mantle's architecture?",
+        options: ["Order book exchanges", "AMM (Automated Market Makers)", "Lending protocols", "All of the above"],
+        correct: 3
+      },
+      {
+        question: "How does Mantle handle cross-chain asset bridging?",
+        options: ["Native bridge only", "Third-party bridges only", "Official bridge with fraud proofs", "No bridging support"],
+        correct: 2
+      },
+      {
+        question: "What is the typical transaction confirmation time on Mantle?",
+        options: ["15 seconds", "1-2 seconds", "1 minute", "5 minutes"],
+        correct: 1
+      },
+      {
+        question: "Which token standard does Mantle support for DeFi assets?",
+        options: ["ERC-20 only", "ERC-721 only", "ERC-20, ERC-721, and ERC-1155", "Native tokens only"],
+        correct: 2
+      }
+    ]
+  },
+  'scaling-solutions': {
+    id: 'scaling-solutions',
+    title: 'L2 Scaling with Mantle',
+    description: 'Deep dive into Layer 2 scaling technologies and Mantle\'s approach',
+    questions: [
+      {
+        question: "What is Mantle's approach to data availability?",
+        options: ["On-chain only", "Off-chain with validity proofs", "Modular with external DA layers", "Centralized storage"],
+        correct: 2
+      },
+      {
+        question: "How does Mantle achieve transaction finality?",
+        options: ["Immediate finality", "Probabilistic finality with challenge periods", "Consensus-based finality", "Time-based finality"],
+        correct: 1
+      },
+      {
+        question: "What is the role of validators in the Mantle network?",
+        options: ["Transaction ordering", "Fraud proof generation", "Network security and validation", "Token minting"],
+        correct: 2
+      },
+      {
+        question: "How does Mantle handle MEV (Maximum Extractable Value)?",
+        options: ["MEV protection built-in", "No MEV handling", "Sequencer-level MEV distribution", "Community governance"],
+        correct: 0
+      },
+      {
+        question: "What is Mantle's throughput capacity?",
+        options: ["1,000 TPS", "5,000+ TPS", "10,000 TPS", "Unlimited"],
+        correct: 1
+      }
+    ]
+  },
+  'dev-tools': {
+    id: 'dev-tools',
+    title: 'Mantle Developer Ecosystem',
+    description: 'Master the tools and infrastructure for building on Mantle',
+    questions: [
+      {
+        question: "Which development tools are compatible with Mantle?",
+        options: ["Hardhat and Foundry", "Remix IDE", "Truffle Suite", "All Ethereum tools"],
+        correct: 3
+      },
+      {
+        question: "What RPC endpoint format does Mantle use?",
+        options: ["Custom Mantle RPC", "Ethereum JSON-RPC compatible", "GraphQL only", "REST API"],
+        correct: 1
+      },
+      {
+        question: "How can developers deploy contracts to Mantle?",
+        options: ["Custom deployment tool", "Standard Ethereum deployment", "Special Mantle CLI", "Manual submission"],
+        correct: 1
+      },
+      {
+        question: "Which wallet integrations does Mantle support?",
+        options: ["MetaMask only", "WalletConnect only", "MetaMask, WalletConnect, and others", "Custom wallet required"],
+        correct: 2
+      },
+      {
+        question: "What debugging tools are available for Mantle development?",
+        options: ["Mantle-specific debuggers", "Standard Ethereum debugging tools", "No debugging support", "Console logging only"],
+        correct: 1
+      }
+    ]
+  },
+  'yield-farming': {
+    id: 'yield-farming',
+    title: 'Yield Farming on Mantle',
+    description: 'Learn yield farming strategies and risk assessment on Mantle DeFi',
+    questions: [
+      {
+        question: "What are the main risks in yield farming on Layer 2 networks like Mantle?",
+        options: ["Smart contract risk only", "Impermanent loss and bridge risk", "No risks on L2", "High gas fees"],
+        correct: 1
+      },
+      {
+        question: "How does yield farming on Mantle compare to Ethereum mainnet?",
+        options: ["Same yields, lower costs", "Higher yields, same costs", "Lower yields, higher costs", "No difference"],
+        correct: 0
+      },
+      {
+        question: "What is the recommended strategy for new yield farmers on Mantle?",
+        options: ["Start with high-risk pools", "Begin with established, audited protocols", "Avoid yield farming", "Only use leveraged positions"],
+        correct: 1
+      },
+      {
+        question: "Which metrics are most important for evaluating yield farming opportunities?",
+        options: ["APY only", "APY, TVL, and protocol security", "Token price only", "Social media hype"],
+        correct: 1
+      },
+      {
+        question: "How should farmers handle impermanent loss on Mantle AMMs?",
+        options: ["Ignore it completely", "Monitor pool composition and exit strategies", "Only provide single-asset liquidity", "Use leveraged positions"],
+        correct: 1
+      }
+    ]
+  },
+  'validator-operations': {
+    id: 'validator-operations',
+    title: 'Mantle Validator & Node Operations',
+    description: 'Expert-level knowledge on running Mantle network infrastructure',
+    questions: [
+      {
+        question: "What are the hardware requirements for running a Mantle validator?",
+        options: ["Standard laptop", "8GB RAM, 2 CPU cores, 100GB storage", "32GB RAM, 8+ CPU cores, 2TB SSD", "No specific requirements"],
+        correct: 2
+      },
+      {
+        question: "What is the minimum stake requirement for Mantle validators?",
+        options: ["No minimum", "32 MNT", "100,000 MNT", "Varies by governance"],
+        correct: 3
+      },
+      {
+        question: "How are validator rewards distributed on Mantle?",
+        options: ["Fixed daily payments", "Based on uptime and performance", "Equal distribution", "No validator rewards"],
+        correct: 1
+      },
+      {
+        question: "What happens if a validator goes offline on Mantle?",
+        options: ["Immediate slashing", "Gradual penalty reduction", "No penalty", "Network stops"],
+        correct: 1
+      },
+      {
+        question: "Which monitoring tools are recommended for Mantle validators?",
+        options: ["Basic ping monitoring", "Comprehensive node monitoring with alerting", "No monitoring needed", "Manual checking"],
         correct: 1
       }
     ]
@@ -311,7 +481,7 @@ function QuizGame() {
             }}>
               <h3 style={{ color: "#00ff87", marginBottom: "1rem" }}>🪙 Your Rewards</h3>
               <p style={{ color: "#ffffff", margin: "0.5rem 0" }}>
-                Base Tokens: {selectedAmount} CORE × 100 = {parseFloat(selectedAmount) * 100} TK1
+                Base Tokens: {selectedAmount} MNT × 100 = {parseFloat(selectedAmount) * 100} TK1
               </p>
               <p style={{ color: "#ffffff", margin: "0.5rem 0" }}>
                 Bonus: {score === quizConfig.questions.length ? '10-90% additional tokens for all correct answers!' : 'Better luck next time!'}
@@ -454,7 +624,7 @@ function QuizGame() {
               marginBottom: "0.5rem",
               fontWeight: "500"
             }}>
-              Entry Amount (CORE):
+              Entry Amount (MNT):
             </label>
             <input
               type="number"
@@ -490,7 +660,7 @@ function QuizGame() {
               minWidth: "200px"
             }}
           >
-            {isStartPending ? "Starting..." : `🎮 Start Quiz (${selectedAmount} CORE)`}
+            {isStartPending ? "Starting..." : `🎮 Start Quiz (${selectedAmount} MNT)`}
           </button>
         </div>
       </div>

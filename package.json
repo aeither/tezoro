@@ -2,7 +2,7 @@
   "name": "tezoro",
   "private": true,
   "version": "1.0.0",
-  "description": "Interactive learning platform with onchain quiz games and rewards on Core blockchain",
+      "description": "Interactive learning platform with onchain quiz games and rewards on Mantle blockchain",
   "type": "module",
   "scripts": {
     "dev": "vite",

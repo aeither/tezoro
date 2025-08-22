@@ -109,4 +109,4 @@ forge verify-contract <CONTRACT_ADDRESS> src/QuizGame.sol:QuizGame \
 
 ---
 
-**Note**: Make sure you have test tCORE in your wallet for gas fees before deploying!
+**Note**: Make sure you have test MNT in your wallet for gas fees before deploying!

@@ -7,7 +7,6 @@
 
 a game-like learning app where users earn rewards by answering quizzes and challenging others turning study into friendly competition, with real benefits for every correct answer
 
-
 ## DEMO
 
 https://tezoro.vercel.app/
@@ -236,7 +235,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981 {
 }
 ```
 
-### Core Blockchain Integration
+### Mantle Blockchain Integration
 - **Fast Finality**: Sub-second transaction confirmation enables real-time gaming
 - **Low Gas Costs**: Affordable fees make micro-rewards economically viable  
 - **EVM Compatibility**: Seamless integration with existing Web3 tooling
@@ -258,7 +257,7 @@ contract QuizNFT is ERC721, ERC721URIStorage, IERC2981 {
 
 ### 💰 Reward Economy
 - **Yuzu Points**: Earned through learning activities
-- **CORE Token Conversion**: Points convert to Core tokens
+- **MNT Token Conversion**: Points convert to Mantle tokens
 - **Seasonal Rewards**: Bonus distributions for top performers
 - **NFT Achievements**: On-chain proof of learning milestones
 
