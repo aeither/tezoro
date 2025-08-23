@@ -5,6 +5,8 @@
 
 # 🏛️ Tezoro
 
+Turn studying into an addictive game where you earn real rewards for every correct answer and challenge friends to quiz battles.
+
 a game-like learning app where users earn rewards by answering quizzes and challenging others turning study into friendly competition, with real benefits for every correct answer
 
 ## DEMO
